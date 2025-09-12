@@ -1,4 +1,6 @@
-﻿namespace ZonaRival.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace ZonaRival.Models
 {
     public class Partido
     {
@@ -18,7 +20,7 @@
         public Equipo equipo2 { get; set; }
 
         //Relacion con historial
-        public List<Historial> historiales { get; set; }
+        public List<Historial> historiales { get; set; } = new();
 
 
 

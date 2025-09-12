@@ -2,8 +2,8 @@
 {
     public class RegistroViewModel
     {
-        public Equipo equipo {  get; set; }
-        public Usuario usuario { get; set; }
-        public Cancha cancha { get; set; }
+        public Equipo equipo { get; set; } = new();
+        public Usuario usuario { get; set; } = new();
+        public List<Cancha> canchas { get; set; } = new();
     }
 }

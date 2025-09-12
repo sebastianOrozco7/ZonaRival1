@@ -21,23 +21,31 @@ namespace ZonaRival.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrar(RegistroViewModel model)
+        public IActionResult Registro(RegistroViewModel model)
         {
-            if(ModelState.IsValid)
-            {
+          
                 _inicioService.RegistrarEquipo(model.equipo);
 
-                model.equipo.EquipoId = model.usuario.IdEquipo; // para que primero registre equipo y le asigne un id de equipo a el usuario
+                model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
                 _inicioService.RegistrarUsuario(model.usuario);
 
-                _inicioService.RegistrarCanchasPrefencia(model.cancha);
+                foreach (var cancha in model.canchas)
+                {
+                    // 1. Registrar la cancha si es nueva
+                    _inicioService.RegistrarCancha(cancha);
+
+                    // 2. Crear la relación Equipo-Cancha
+                    var equipoCancha = new EquipoCancha
+                    {
+                        EquipoId = model.equipo.EquipoId,
+                        CanchaId = cancha.CanchaId
+                    };
+                    _inicioService.RegistrarEquipoCancha(equipoCancha);
+                }
                 return RedirectToAction("index", "Home");
-            }
-            return View(model);
+            
         }
 
-        
-
-
     }
+    
 }

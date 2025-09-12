@@ -1,4 +1,6 @@
-﻿namespace ZonaRival.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace ZonaRival.Models
 {
     public class Equipo
     {
@@ -9,12 +11,11 @@
         public string ColorUniforme { get; set; }
 
         // Relación con Usuario
-        public List<Usuario> Usuarios { get; set; }//lista de usuarios
-
+        public List<Usuario> Usuarios { get; set; } = new();//lista de usuarios
         // Relación muchos a muchos con Cancha
-        public List<EquipoCancha> EquiposCanchas { get; set; }
+        public List<EquipoCancha> EquiposCanchas { get; set; } = new();
 
         //Relacion con historial
-        public List<Historial> historiales { get; set; }
+        public List<Historial> historiales { get; set; } = new();
     }
 }
