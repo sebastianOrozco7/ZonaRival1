@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ZonaRival.Models;
+using ZonaRival.Models.ViewModels;
 
 namespace ZonaRival.Data
 {
@@ -11,20 +12,19 @@ namespace ZonaRival.Data
         public DbSet<Usuario> Usuarios {  get; set; }
         public DbSet<Cancha> Canchas {  get; set; }
         public DbSet<Partido> Partidos { get; set; }
-        public DbSet<Historial> Historiales {  get; set; }
+      
 
         //tablas relacionales
         public DbSet<EquipoCancha> EquiposCanchas { get; set; }
+        public DbSet<EquipoPartido> EquiposPartidos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Definiendo la clave primaria
+            // Relacionando EquipoCancha con Equipo y con Cancha
             modelBuilder.Entity<EquipoCancha>()
                 .HasKey(ec => new { ec.EquipoId, ec.CanchaId });
-
-            // Relacionando EquipoCancha con Equipo y con Cancha
             modelBuilder.Entity<EquipoCancha>()
                 .HasOne(ec => ec.Equipo)
                 .WithMany(e => e.EquiposCanchas)
@@ -41,30 +41,21 @@ namespace ZonaRival.Data
                 .WithMany(e => e.Usuarios)
                 .HasForeignKey(u => u.IdEquipo);
 
-            //relacionando partido con equipo (2 equipos por partido)
-            modelBuilder.Entity<Partido>()
-                .HasOne(p => p.equipo1)
-                .WithMany()
-                .HasForeignKey(p => p.EquipoId1)
-                .OnDelete(DeleteBehavior.Restrict);
+            //Relacion de EquipoPartido con Equipo y Partido
+            modelBuilder.Entity<EquipoPartido>()
+                .HasKey(ep => new { ep.EquipoId, ep.PartidoId });
 
-            modelBuilder.Entity<Partido>()
-                .HasOne(p => p.equipo2)
-                .WithMany()
-                .HasForeignKey(p => p.EquipoId2)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<EquipoPartido>()
+                .HasOne(ep => ep.Equipo)
+                .WithMany(e => e.equipoPartidos)
+                .HasForeignKey(ep => ep.EquipoId);
 
-            //Relacion de historial con partido
-            modelBuilder.Entity<Historial>()
-                .HasOne(h => h.partido)
-                .WithMany(p => p.historiales)
-                .HasForeignKey(h => h.PartidoId);
+            modelBuilder.Entity<EquipoPartido>()
+                .HasOne(ep => ep.Partido)
+                .WithMany(p => p.equipoPartidos)
+                .HasForeignKey(ep =>  ep.PartidoId);
 
-            //Relacon de historial con equipo
-            modelBuilder.Entity<Historial>()
-                .HasOne(h => h.equipo)
-                .WithMany(e => e.historiales)
-                .HasForeignKey(h => h.EquipoId);
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using ZonaRival.Models.ViewModels;
 
 namespace ZonaRival.Models
 {
@@ -14,18 +15,9 @@ namespace ZonaRival.Models
         public Cancha Cancha { get; set; }
 
         //relacion con Equipo
-        public int EquipoId1 { get; set; }
-        public Equipo equipo1 { get; set; }
-        public int EquipoId2 { get; set; }
-        public Equipo equipo2 { get; set; }
+        public List<EquipoPartido> equipoPartidos { get; set; } = new();
 
-        //Relacion con historial
-        public List<Historial> historiales { get; set; } = new();
-
-
-
-
-
+        
 
     }
 }

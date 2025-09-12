@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZonaRival.Data;
 
@@ -11,9 +12,11 @@ using ZonaRival.Data;
 namespace ZonaRival.Migrations
 {
     [DbContext(typeof(ZonaRivalContext))]
-    partial class ZonaRivalContextModelSnapshot : ModelSnapshot
+    [Migration("20250912201852_Listo")]
+    partial class Listo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +56,6 @@ namespace ZonaRival.Migrations
                     b.Property<string>("ColorUniforme")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<bool>("Disponibilidad")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("NombreEquipo")
                         .IsRequired()

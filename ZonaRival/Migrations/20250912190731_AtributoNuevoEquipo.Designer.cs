@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZonaRival.Data;
 
@@ -11,9 +12,11 @@ using ZonaRival.Data;
 namespace ZonaRival.Migrations
 {
     [DbContext(typeof(ZonaRivalContext))]
-    partial class ZonaRivalContextModelSnapshot : ModelSnapshot
+    [Migration("20250912190731_AtributoNuevoEquipo")]
+    partial class AtributoNuevoEquipo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +57,6 @@ namespace ZonaRival.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("Disponibilidad")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("NombreEquipo")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -85,6 +85,32 @@ namespace ZonaRival.Migrations
                     b.ToTable("EquiposCanchas");
                 });
 
+            modelBuilder.Entity("ZonaRival.Models.Historial", b =>
+                {
+                    b.Property<int>("HistorialId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("HistorialId"));
+
+                    b.Property<int>("EquipoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaDeRegistro")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PartidoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HistorialId");
+
+                    b.HasIndex("EquipoId");
+
+                    b.HasIndex("PartidoId");
+
+                    b.ToTable("Historiales");
+                });
+
             modelBuilder.Entity("ZonaRival.Models.Partido", b =>
                 {
                     b.Property<int>("PartidoId")
@@ -94,6 +120,12 @@ namespace ZonaRival.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("PartidoId"));
 
                     b.Property<int>("CanchaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipoId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipoId2")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -110,6 +142,10 @@ namespace ZonaRival.Migrations
                     b.HasKey("PartidoId");
 
                     b.HasIndex("CanchaId");
+
+                    b.HasIndex("EquipoId1");
+
+                    b.HasIndex("EquipoId2");
 
                     b.ToTable("Partidos");
                 });
@@ -144,21 +180,6 @@ namespace ZonaRival.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("ZonaRival.Models.ViewModels.EquipoPartido", b =>
-                {
-                    b.Property<int>("EquipoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PartidoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipoId", "PartidoId");
-
-                    b.HasIndex("PartidoId");
-
-                    b.ToTable("EquiposPartidos");
-                });
-
             modelBuilder.Entity("ZonaRival.Models.EquipoCancha", b =>
                 {
                     b.HasOne("ZonaRival.Models.Cancha", "Cancha")
@@ -178,6 +199,25 @@ namespace ZonaRival.Migrations
                     b.Navigation("Equipo");
                 });
 
+            modelBuilder.Entity("ZonaRival.Models.Historial", b =>
+                {
+                    b.HasOne("ZonaRival.Models.Equipo", "equipo")
+                        .WithMany("historiales")
+                        .HasForeignKey("EquipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZonaRival.Models.Partido", "partido")
+                        .WithMany("historiales")
+                        .HasForeignKey("PartidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("equipo");
+
+                    b.Navigation("partido");
+                });
+
             modelBuilder.Entity("ZonaRival.Models.Partido", b =>
                 {
                     b.HasOne("ZonaRival.Models.Cancha", "Cancha")
@@ -186,7 +226,23 @@ namespace ZonaRival.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ZonaRival.Models.Equipo", "equipo1")
+                        .WithMany()
+                        .HasForeignKey("EquipoId1")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ZonaRival.Models.Equipo", "equipo2")
+                        .WithMany()
+                        .HasForeignKey("EquipoId2")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Cancha");
+
+                    b.Navigation("equipo1");
+
+                    b.Navigation("equipo2");
                 });
 
             modelBuilder.Entity("ZonaRival.Models.Usuario", b =>
@@ -198,25 +254,6 @@ namespace ZonaRival.Migrations
                         .IsRequired();
 
                     b.Navigation("Equipo");
-                });
-
-            modelBuilder.Entity("ZonaRival.Models.ViewModels.EquipoPartido", b =>
-                {
-                    b.HasOne("ZonaRival.Models.Equipo", "Equipo")
-                        .WithMany("equipoPartidos")
-                        .HasForeignKey("EquipoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZonaRival.Models.Partido", "Partido")
-                        .WithMany("equipoPartidos")
-                        .HasForeignKey("PartidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Equipo");
-
-                    b.Navigation("Partido");
                 });
 
             modelBuilder.Entity("ZonaRival.Models.Cancha", b =>
@@ -232,12 +269,12 @@ namespace ZonaRival.Migrations
 
                     b.Navigation("Usuarios");
 
-                    b.Navigation("equipoPartidos");
+                    b.Navigation("historiales");
                 });
 
             modelBuilder.Entity("ZonaRival.Models.Partido", b =>
                 {
-                    b.Navigation("equipoPartidos");
+                    b.Navigation("historiales");
                 });
 #pragma warning restore 612, 618
         }
