@@ -15,6 +15,7 @@ namespace ZonaRival.Controllers
             _inicioService = inicioService;
         }
 
+        [HttpGet]
         public IActionResult Registro()
         {
             return View();
@@ -42,8 +43,26 @@ namespace ZonaRival.Controllers
                     };
                     _inicioService.RegistrarEquipoCancha(equipoCancha);
                 }
-                return RedirectToAction("index", "Home");
-            
+                return RedirectToAction("login", "Inicio");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(Usuario usuario)
+        {
+            var UsuarioDB = _inicioService.VerificacionInicioSesion(usuario.Gmail, usuario.Contraseña);
+
+            if (UsuarioDB != null)
+                return RedirectToAction("Index", "Home");
+
+            ViewBag.Error = "Correo o Contraseña incorrectos";
+
+            return View();
         }
 
     }

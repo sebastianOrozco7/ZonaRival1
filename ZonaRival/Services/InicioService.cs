@@ -41,5 +41,14 @@ namespace ZonaRival.Services
             _context.EquiposCanchas.Add(equipoCancha);
             _context.SaveChanges();
         }
+
+        public Usuario VerificacionInicioSesion(string Email, string Contraseña)
+        {
+           var usuario = _context.Usuarios
+                .FirstOrDefault(u => u.Gmail == Email && u.Contraseña == Contraseña);
+
+            return usuario;
+        }
+        
     }
 }
