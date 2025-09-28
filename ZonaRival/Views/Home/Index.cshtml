@@ -1,5 +1,6 @@
 ﻿@{
-    Layout = null;
+    @model ZonaRival.Models.Equipo
+                                                                                                                                                                                                  
 }
 <!-- HTML BIENVENIDA -->
 <!DOCTYPE html>
@@ -31,23 +32,32 @@
                     <div class="team-info">
                         <div class="info-item">
                             <span class="info-label">Nombre del Equipo:</span>
-                            <span class="info-value" data-team-name></span>
+                            <span class="info-value" data-team-name>@Model.NombreEquipo</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cantidad de Jugadores:</span>
-                            <span class="info-value" data-players-count></span>
+                            <span class="info-value" data-players-count>@Model.CantidadJugadores</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Rango de Edad:</span>
-                            <span class="info-value" data-age-range></span>
+                            <span class="info-value" data-age-range>@Model.RangoEdad</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Color de Uniforme:</span>
-                            <span class="info-value" data-uniform-color></span>
+                            <span class="info-value" data-uniform-color>@Model.ColorUniforme</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Canchas de Preferencia:</span>
-                            <span class="info-value" data-preferred-courts></span>
+                            <span class="info-value" data-preferred-courts>
+                                @if (Model.EquiposCanchas != null && Model.EquiposCanchas.Any())
+                                {
+                                    @string.Join(", ", Model.EquiposCanchas.Select(ec => ec.Cancha.NombreCancha))
+                                }
+                                else
+                                {
+                                    @: Ninguna
+                                }
+                            </span>
                         </div>
                     </div>
                     <button class="edit-btn" data-edit-team>Editar Información</button>

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ZonaRival.Data;
 using ZonaRival.Models;
 using ZonaRival.Models.ViewModels;
 using ZonaRival.Services;
+
 
 namespace ZonaRival.Controllers
 {
@@ -58,8 +60,11 @@ namespace ZonaRival.Controllers
             var UsuarioDB = _inicioService.VerificacionInicioSesion(usuario.Gmail, usuario.Contraseña);
 
             if (UsuarioDB != null)
+            {
+                HttpContext.Session.SetString("email", UsuarioDB.Gmail); //guarda el email del usuario autenticado en la sesión, que es como una "memoria temporal" del servidor que identifica al usuario mientras navega.
                 return RedirectToAction("Index", "Home");
-
+            }
+            
             ViewBag.Error = "Correo o Contraseña incorrectos";
 
             return View();

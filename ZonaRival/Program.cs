@@ -2,12 +2,25 @@
 using Microsoft.EntityFrameworkCore;
 using ZonaRival.Data;
 using ZonaRival.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Agregar servicios de sesiones
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo de expiración de la sesión
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<InicioService>();
+builder.Services.AddScoped<EquipoService>();
 
 
 // Leer la cadena de conexión desde appsettings.json
@@ -17,9 +30,17 @@ var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ZonaRivalContext>(options =>
     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
 
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Configurar el pipeline
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseSession(); // Habilitar sesiones
+app.UseAuthorization();
 
 
 // Configure the HTTP request pipeline.
@@ -39,6 +60,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Inicio}/{action=login}/{id?}");
 
 app.Run();
