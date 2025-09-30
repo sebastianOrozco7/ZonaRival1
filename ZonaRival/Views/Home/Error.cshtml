@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Equipo no encontrado";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true">
+</head>
+<body>
+    <div class="background">
+        <div class="home-container">
+            <div class="welcome-section">
+                <h1 class="welcome-message">⚠ Equipo no encontrado</h1>
+                <p class="motivational-quote">
+                    No se encontró información del equipo asociado a este usuario.
+                </p>
+            </div>
+
+            <div class="sections-container">
+                <div class="section">
+                    <p>Puedes intentar:</p>
+                    <ul>
+                        <li>Verificar que tu cuenta tenga un equipo asociado.</li>
+                        <li>Contactar al administrador para registrar un nuevo equipo.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <a class="edit-btn" href="@Url.Action("Index", "Home")">Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>
+

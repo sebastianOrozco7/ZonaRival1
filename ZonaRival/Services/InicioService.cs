@@ -44,7 +44,8 @@ namespace ZonaRival.Services
 
         public Usuario? VerificacionInicioSesion(string Email, string Contraseña)
         {
-           var usuario = _context.Usuarios
+           
+            var usuario = _context.Usuarios
                 .FirstOrDefault(u => u.Gmail == Email && u.Contraseña == Contraseña);
 
             return usuario;
