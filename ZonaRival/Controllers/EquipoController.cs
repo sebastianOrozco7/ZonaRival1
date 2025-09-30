@@ -30,7 +30,7 @@ namespace ZonaRival.Controllers
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
 
-            return View("index", equipo);
+            return View("index", equipo); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
     }
 }

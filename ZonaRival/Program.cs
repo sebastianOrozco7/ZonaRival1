@@ -60,6 +60,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Inicio}/{action=login}/{id?}");
+    pattern: "{controller=Inicio}/{action=Login}/{id?}");
 
 app.Run();

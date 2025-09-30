@@ -14,7 +14,7 @@ namespace ZonaRival.Services
             _context = context;
         }
 
-        public async Task<Equipo> ObtenerInfoEquipo(string Gmail) // se esta obteniendo a traves del gmail del usuario
+        public async Task<Equipo?> ObtenerInfoEquipo(string Gmail) // se esta obteniendo a traves del gmail del usuario
         {
             var usuario = await _context.Usuarios
                 .Include(u => u.Equipo)

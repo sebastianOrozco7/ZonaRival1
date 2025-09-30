@@ -32,26 +32,37 @@
                     <div class="team-info">
                         <div class="info-item">
                             <span class="info-label">Nombre del Equipo:</span>
-                            <span class="info-value" data-team-name>@Model.NombreEquipo</span>
+                            <span class="info-value" data-team-name>@(Model?.NombreEquipo ?? "Sin nombre")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cantidad de Jugadores:</span>
-                            <span class="info-value" data-players-count>@Model.CantidadJugadores</span>
+                            <span class="info-value" data-players-count>@(Model?.CantidadJugadores > 0 ? Model.CantidadJugadores.ToString() : "No especificado")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Rango de Edad:</span>
-                            <span class="info-value" data-age-range>@Model.RangoEdad</span>
+                            <span class="info-value" data-age-range>@(Model?.RangoEdad ?? "No especificado")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Color de Uniforme:</span>
-                            <span class="info-value" data-uniform-color>@Model.ColorUniforme</span>
+                            <span class="info-value" data-uniform-color>@(Model?.ColorUniforme ?? "No especificado")</span>
                         </div>
+
                         <div class="info-item">
                             <span class="info-label">Canchas de Preferencia:</span>
                             <span class="info-value" data-preferred-courts>
-                                @if (Model.EquiposCanchas != null && Model.EquiposCanchas.Any())
+                                @if (Model?.EquiposCanchas != null && Model.EquiposCanchas.Any())
                                 {
-                                    @string.Join(", ", Model.EquiposCanchas.Select(ec => ec.Cancha.NombreCancha))
+                                    var canchasValidas = Model.EquiposCanchas
+                                    .Where(ec => ec != null && ec.Cancha != null && ec.Cancha.NombreCancha != null)
+                                    .Select(ec => ec.Cancha.NombreCancha);
+                                    if (canchasValidas.Any())
+                                    {
+                                        @string.Join(", ", canchasValidas)
+                                    }
+                                    else
+                                    {
+                                        @: Ninguna
+                                    }
                                 }
                                 else
                                 {
