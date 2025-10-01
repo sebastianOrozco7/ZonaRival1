@@ -26,10 +26,18 @@ namespace ZonaRival.Controllers
         [HttpPost]
         public IActionResult Registro(RegistroViewModel model)
         {
-          
                 _inicioService.RegistrarEquipo(model.equipo);
 
                 model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
+
+            //verificar el Gmail
+            if (_inicioService.VerificarGmail(model.usuario.Gmail))
+            {
+                ViewBag.Error = "El Correo ya está registrado. Usa otro para completar el registro.";
+                return View();
+            }
+
+                //Registrar el usuario
                 _inicioService.RegistrarUsuario(model.usuario);
 
                 foreach (var cancha in model.canchas)

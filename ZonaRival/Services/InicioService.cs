@@ -16,8 +16,15 @@ namespace ZonaRival.Services
         //registrar Usuario
         public void RegistrarUsuario(Usuario usuario)
         {
-            _context.Usuarios.Add(usuario);
-            _context.SaveChanges();
+                _context.Usuarios.Add(usuario);
+                _context.SaveChanges();
+        }
+
+        //metodo para verificar si existe un usuario con un Gmail registrado
+        public bool VerificarGmail(string GmailUsuario)
+        {
+            return  _context.Usuarios // le estoy pasando la lista de usuarios para que pueda verificar
+               .Any(u => u.Gmail == GmailUsuario); //con any me verifica si existe y me devuelve true o false
         }
 
       

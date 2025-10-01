@@ -20,6 +20,11 @@
             <div class="form">
                 <h1 class="logo">ZonaRival</h1>
                 <h2 class="subtitle">Registro</h2>
+                <!-- Bloque para mostrar el mensaje de error -->
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="error-message" style="color: red; margin-bottom: 15px;">@ViewBag.Error</div>
+                }
                 
                 <form asp-controller="Inicio" asp-action="Registro" method="post" class="registration-form">
                     <div class="form-group">
