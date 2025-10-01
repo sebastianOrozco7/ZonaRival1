@@ -24,5 +24,25 @@ namespace ZonaRival.Services
                 .FirstOrDefaultAsync(u => u.Gmail == Gmail); //filtra la lista de todos los usuarios y el usuario que coincida con el Gmail escrito en el Login lo trae 
             return usuario?.Equipo;
         }
+
+        public async Task<bool> ActualizarDisponibilidadEquipo(int EquipoId)
+        {
+            var equipo = await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
+            if(equipo == null)
+            {
+                return false;// en caso de que no encuentre ningun equipo con ese Id entrara aca
+            }
+
+            //si no continura aca y cambiara la disponibilidad
+            equipo.Disponibilidad = true; 
+            await _context.SaveChangesAsync();//aca estoy guardando los cambios en la base de datos 
+            return true;
+        }
+
+        /*public async Task<List<Equipo>> ListaEquiposDisponibles()
+        {
+
+        }
+        */
     }
 }
