@@ -17,9 +17,15 @@ namespace ZonaRival.Controllers
             _EquipoService = equipoService;
         }
 
+        [HttpGet]
+        public IActionResult Panel()
+        {
+            return View("~/Views/Home/Panel.cshtml");
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Index() // este metodo maneja el apartado donde se muestra la info del equipo
+
+        public async Task<IActionResult> InformacionEquipo() // este metodo maneja el apartado donde se muestra la info del equipo
         {
             var Gmail = HttpContext.Session.GetString("Gmail"); // le estoy asignando a la variable Gmail el Gmail que el usuario digito en el Login
 
@@ -32,7 +38,7 @@ namespace ZonaRival.Controllers
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
 
-            return View("~/Views/Home/Index.cshtml", equipo); // le paso la vista y el objeto que debe utilizar para mostrar los datos
+            return View("~/Views/Home/Panel.cshtml", equipo); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
 
         [HttpPost]
@@ -42,7 +48,7 @@ namespace ZonaRival.Controllers
 
             if (CambioDisponibiliadad)
             {
-                return RedirectToAction("~/Views/Home/Index.cshtml");
+                return RedirectToAction("~/Views/Home/Panel.cshtml");
             }
             else
             {

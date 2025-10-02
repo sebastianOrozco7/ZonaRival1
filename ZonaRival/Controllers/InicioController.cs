@@ -70,7 +70,7 @@ namespace ZonaRival.Controllers
             if (UsuarioDB != null)
             {
                 HttpContext.Session.SetString("Gmail", UsuarioDB.Gmail); //guarda el Gmail del usuario autenticado en la sesión, que es como una "memoria temporal" del servidor que identifica al usuario mientras navega.
-                return RedirectToAction("Index", "Equipo");
+                return RedirectToAction("InformacionEquipo", "Equipo");
 
             }
             
