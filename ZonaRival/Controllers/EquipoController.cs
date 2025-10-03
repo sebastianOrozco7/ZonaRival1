@@ -2,6 +2,7 @@
 using Org.BouncyCastle.Crypto.Macs;
 using ZonaRival.Data;
 using ZonaRival.Models;
+using ZonaRival.Models.ViewModels;
 using ZonaRival.Services;
 
 
@@ -37,8 +38,13 @@ namespace ZonaRival.Controllers
 
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
+            var EquipoModelView = new EquipoViewModel
+            {
+                equipoViewModel = equipo,
+                ListaEquipos = new List<Equipo>()
+            };
 
-            return View("~/Views/Home/Panel.cshtml", equipo); // le paso la vista y el objeto que debe utilizar para mostrar los datos
+            return View("~/Views/Home/Panel.cshtml", EquipoModelView); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
 
         [HttpPost]
@@ -48,13 +54,21 @@ namespace ZonaRival.Controllers
 
             if (CambioDisponibiliadad)
             {
-                return RedirectToAction("InformacionEquipo", "Equipo"); // hay que redirigirlos a la funcion donde se muestra la lista
+                var equipos = await _EquipoService.ListaEquiposDisponibles();
+                var equipo = await _EquipoService.BuscarEquipo(EquipoId);
+                var ListaModelView = new EquipoViewModel
+                {
+                    ListaEquipos = equipos,
+                    equipoViewModel = equipo
+                };
+                return View("~/Views/Home/Panel.cshtml", ListaModelView);
             }
             else
             {
                 ViewBag.Error = "No se pudo actualizar la disponibilidad.";
-                return View("~/Views/Home/Index.cshtml");
+                return View("~/Views/Home/Panel.cshtml");
             }
         }
+
     }
 }

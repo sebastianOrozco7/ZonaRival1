@@ -1,5 +1,5 @@
 ﻿@{
-    @model ZonaRival.Models.Equipo
+    @model ZonaRival.Models.ViewModels.EquipoViewModel;
                                                                                                                                                                                                   
 }
 <!-- HTML BIENVENIDA -->
@@ -33,27 +33,27 @@
                     <div class="team-info">
                         <div class="info-item">
                             <span class="info-label">Nombre del Equipo:</span>
-                            <span class="info-value" data-team-name>@(Model?.NombreEquipo ?? "Sin nombre")</span>
+                            <span class="info-value" data-team-name>@(Model.equipoViewModel.NombreEquipo ?? "Sin nombre")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cantidad de Jugadores:</span>
-                            <span class="info-value" data-players-count>@(Model?.CantidadJugadores > 0 ? Model.CantidadJugadores.ToString() : "No especificado")</span>
+                            <span class="info-value" data-players-count>@(Model.equipoViewModel.CantidadJugadores > 0 ? Model.equipoViewModel.CantidadJugadores.ToString() : "No especificado")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Rango de Edad:</span>
-                            <span class="info-value" data-age-range>@(Model?.RangoEdad ?? "No especificado")</span>
+                            <span class="info-value" data-age-range>@(Model.equipoViewModel.RangoEdad ?? "No especificado")</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Color de Uniforme:</span>
-                            <span class="info-value" data-uniform-color>@(Model?.ColorUniforme ?? "No especificado")</span>
+                            <span class="info-value" data-uniform-color>@(Model.equipoViewModel.ColorUniforme ?? "No especificado")</span>
                         </div>
 
                         <div class="info-item">
                             <span class="info-label">Canchas de Preferencia:</span>
                             <span class="info-value" data-preferred-courts>
-                                @if (Model?.EquiposCanchas != null && Model.EquiposCanchas.Any())
+                                @if (Model.equipoViewModel.EquiposCanchas != null && Model.equipoViewModel.EquiposCanchas.Any())
                                 {
-                                    var canchasValidas = Model.EquiposCanchas
+                                    var canchasValidas = Model.equipoViewModel.EquiposCanchas
                                     .Where(ec => ec != null && ec.Cancha != null && ec.Cancha.NombreCancha != null)
                                     .Select(ec => ec.Cancha.NombreCancha);
                                     if (canchasValidas.Any())
@@ -75,16 +75,20 @@
                     <button type="button" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar Información</button>
                 </div>
 
+              
                 <!-- Apartado de equipos disponibles -->
                 <div class="section">
                     <h2 class="section-title">Equipos Disponibles</h2>
                     <div class="available-teams">
                         <ul class="teams-list" data-teams-list>
-                            <!-- Lista de equipos se cargará dinámicamente -->
+                            @foreach (var equipo in Model.ListaEquipos)
+                            {
+                                <li>@equipo.NombreEquipo</li>
+                            }
                         </ul>
                     </div>
                     <form asp-action="HabilitarDisponibilidadEquipo" asp-controller="Equipo" method="post">
-                        <input type="hidden" name="equipoId" value="@Model?.EquipoId" />   <!-- El controlador necesita el ID del equipo, en esta linea se lo estoy pasando de forma oculta para que el usuario no vea este proceso -->
+                        <input type="hidden" name="equipoId" value="@Model.equipoViewModel.EquipoId" />  <!-- El controlador necesita el ID del equipo, en esta linea se lo estoy pasando de forma oculta para que el usuario no vea este proceso -->
                         <button type="submit" class="availability-btn" data-toggle-availability>Habilitar Disponibilidad</button>
                     </form>
                 </div>
@@ -111,23 +115,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <form id="editTeamForm" method="post" asp-controller="Home" asp-action="EditEquipo">
-                    <input type="hidden" name="EquipoId" value="@Model?.EquipoId" />
+                    <input type="hidden" name="EquipoId" value="@Model.equipoViewModel.EquipoId" />
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="NombreEquipo" class="form-label">Nombre del Equipo</label>
-                            <input type="text" class="form-control" id="NombreEquipo" name="NombreEquipo" value="@Model?.NombreEquipo" required>
+                            <input type="text" class="form-control" id="NombreEquipo" name="NombreEquipo" value="@Model.equipoViewModel.NombreEquipo" required>
                         </div>
                         <div class="mb-3">
                             <label for="CantidadJugadores" class="form-label">Cantidad de Jugadores</label>
-                            <input type="number" class="form-control" id="CantidadJugadores" name="CantidadJugadores" value="@Model?.CantidadJugadores" min="1" required>
+                            <input type="number" class="form-control" id="CantidadJugadores" name="CantidadJugadores" value="@Model.equipoViewModel.CantidadJugadores" min="1" required>
                         </div>
                         <div class="mb-3">
                             <label for="RangoEdad" class="form-label">Rango de Edad</label>
-                            <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="@Model?.RangoEdad" required>
+                            <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="@Model.equipoViewModel.RangoEdad" required>
                         </div>
                         <div class="mb-3">
                             <label for="ColorUniforme" class="form-label">Color de Uniforme</label>
-                            <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="@Model?.ColorUniforme" required>
+                            <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="@Model.equipoViewModel.ColorUniforme" required>
                         </div>
                         <!-- Canchas de Preferencia no editable aquí, backend puede manejarlo -->
                     </div>

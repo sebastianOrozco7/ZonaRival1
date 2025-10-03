@@ -40,10 +40,19 @@ namespace ZonaRival.Services
             return true;
         }
 
-        /*public async Task<List<Equipo>> ListaEquiposDisponibles()
+        public async Task<List<Equipo>> ListaEquiposDisponibles()
         {
-
+            return await _context.Equipos
+                .Where(e => e.Disponibilidad == true) //filtra la consulta de acuerdo a su disponibilidad y solo trae los equipos con la disponibilidad en TRUE
+                .ToListAsync();
         }
-        */
+
+        public  async Task<Equipo> BuscarEquipo(int EquipoId)
+        {
+            return await _context.Equipos.FirstOrDefaultAsync(e => e.EquipoId == EquipoId);
+
+            //este metodo se encarga de buscar un equipo por medio del Id, y me devuelve el equipo si lo encontro y null si no
+        }
+
     }
 }
