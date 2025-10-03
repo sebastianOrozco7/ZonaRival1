@@ -83,7 +83,10 @@
                             <!-- Lista de equipos se cargará dinámicamente -->
                         </ul>
                     </div>
-                    <button class="availability-btn" data-toggle-availability>Habilitar Disponibilidad</button>
+                    <form asp-action="HabilitarDisponibilidadEquipo" asp-controller="Equipo" method="post">
+                        <input type="hidden" name="equipoId" value="@Model?.EquipoId" />   <!-- El controlador necesita el ID del equipo, en esta linea se lo estoy pasando de forma oculta para que el usuario no vea este proceso -->
+                        <button type="submit" class="availability-btn" data-toggle-availability>Habilitar Disponibilidad</button>
+                    </form>
                 </div>
 
                 <!-- Apartado de historial de partidos -->

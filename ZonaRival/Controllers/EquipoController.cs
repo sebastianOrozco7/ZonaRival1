@@ -42,13 +42,13 @@ namespace ZonaRival.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DisponibilidadEquipo(int EquipoId)
+        public async Task<IActionResult> HabilitarDisponibilidadEquipo(int EquipoId)
         {
-            var CambioDisponibiliadad = await _EquipoService.ActualizarDisponibilidadEquipo(EquipoId);
+            var CambioDisponibiliadad = await _EquipoService.HabilitarDisponibilidadEquipo(EquipoId);
 
             if (CambioDisponibiliadad)
             {
-                return RedirectToAction("~/Views/Home/Panel.cshtml");
+                return RedirectToAction("InformacionEquipo", "Equipo"); // hay que redirigirlos a la funcion donde se muestra la lista
             }
             else
             {

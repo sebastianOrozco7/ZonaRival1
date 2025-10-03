@@ -25,9 +25,10 @@ namespace ZonaRival.Services
             return usuario?.Equipo;
         }
 
-        public async Task<bool> ActualizarDisponibilidadEquipo(int EquipoId)
+        public async Task<bool> HabilitarDisponibilidadEquipo(int EquipoId)
         {
             var equipo = await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
+
             if(equipo == null)
             {
                 return false;// en caso de que no encuentre ningun equipo con ese Id entrara aca
