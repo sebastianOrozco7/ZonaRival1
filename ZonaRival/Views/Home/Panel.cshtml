@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZonaRival - Inicio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -71,7 +72,7 @@
                             </span>
                         </div>
                     </div>
-                    <button class="edit-btn" data-edit-team>Editar Información</button>
+                    <button type="button" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar Información</button>
                 </div>
 
                 <!-- Apartado de equipos disponibles -->
@@ -98,6 +99,46 @@
         </div>
     </div>
 
+    <!-- Modal para editar información del equipo -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Información del Equipo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="editTeamForm" method="post" asp-controller="Home" asp-action="EditEquipo">
+                    <input type="hidden" name="EquipoId" value="@Model?.EquipoId" />
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="NombreEquipo" class="form-label">Nombre del Equipo</label>
+                            <input type="text" class="form-control" id="NombreEquipo" name="NombreEquipo" value="@Model?.NombreEquipo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="CantidadJugadores" class="form-label">Cantidad de Jugadores</label>
+                            <input type="number" class="form-control" id="CantidadJugadores" name="CantidadJugadores" value="@Model?.CantidadJugadores" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="RangoEdad" class="form-label">Rango de Edad</label>
+                            <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="@Model?.RangoEdad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ColorUniforme" class="form-label">Color de Uniforme</label>
+                            <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="@Model?.ColorUniforme" required>
+                        </div>
+                        <!-- Canchas de Preferencia no editable aquí, backend puede manejarlo -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Array de frases motivacionales sobre fútbol
         const motivationalPhrases = [

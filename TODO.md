@@ -1,4 +1,4 @@
-- [x] Adaptar el formulario en registro.cshtml para compatibilidad con ASP.NET Core MVC
-  - [x] Cambiar <ng-form> a <form> con asp-controller="Usuarios" y asp-action="Registro"
-  - [x] Actualizar atributos name de los inputs para coincidir con las propiedades del modelo
-  - [x] Mantener diseño, clases y estilos CSS intactos
+- [x] Add Bootstrap CSS and JS links to Panel.cshtml
+- [x] Update edit button to trigger modal
+- [x] Add Bootstrap modal with form for editing team info
+- [x] Ensure form posts to /Home/EditEquipo for backend compatibility
