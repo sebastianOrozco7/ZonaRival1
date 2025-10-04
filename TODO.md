@@ -1,4 +1,3 @@
-- [x] Add Bootstrap CSS and JS links to Panel.cshtml
-- [x] Update edit button to trigger modal
-- [x] Add Bootstrap modal with form for editing team info
-- [x] Ensure form posts to /Home/EditEquipo for backend compatibility
+- [ ] Make availability button toggle based on current state
+- [ ] Change teams list to Bootstrap cards
+- [ ] Add challenge button to each team card
