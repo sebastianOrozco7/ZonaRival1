@@ -57,9 +57,9 @@
                         <div class="row" data-teams-list>
                             <!-- Ejemplo de equipos -->
                             <div class="col-12 mb-3">
-                                <div class="card">
+                                        <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Equipo Ejemplo 1</h5>
+                                        <h5 class="card-title">Nombre: Equipo Ejemplo 1</h5>
                                         <h5>Jugadores: 5</h5>
                                         <h5>Color: Azul</h5>
                                         <h5>Edad: 21-25 años</h5>
@@ -70,7 +70,7 @@
                             <div class="col-12 mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Equipo Ejemplo 2</h5>
+                                        <h5 class="card-title">Nombre: Equipo Ejemplo 2</h5>
                                         <h5>Jugadores: 7</h5>
                                         <h5>Color: Rojo</h5>
                                         <h5>Edad: 26-30 años</h5>
@@ -81,7 +81,7 @@
                             <div class="col-12 mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Equipo Ejemplo 3</h5>
+                                        <h5 class="card-title">Nombre: Equipo Ejemplo 3</h5>
                                         <h5>Jugadores: 6</h5>
                                         <h5>Color: Verde</h5>
                                         <h5>Edad: 31-35 años</h5>
@@ -127,11 +127,27 @@
                 </div>
                 <div class="mb-3">
                     <label for="RangoEdad" class="form-label">Rango de Edad</label>
-                    <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="No especificado" required>
+                    <select id="RangoEdad" name="RangoEdad" class="form-control" required>
+                        <option value="">Selecciona un rango de edad</option>
+                        <option value="15-20">15 – 20 años</option>
+                        <option value="21-25">21 – 25 años</option>
+                        <option value="26-30">26 – 30 años</option>
+                        <option value="31-35">31 – 35 años</option>
+                        <option value="36-40">36 – 40 años</option>
+                        <option value="40+">40+ años</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="ColorUniforme" class="form-label">Color de Uniforme</label>
                     <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="No especificado" required>
+                </div>
+                <div class="mb-3">
+                    <label for="preferredCourts" class="form-label">Canchas de preferencia</label>
+                    <div class="courts-container">
+                        <input type="text" id="preferredCourt1" name="canchas[0].NombreCancha" placeholder="1ra opción" required>
+                        <input type="text" id="preferredCourt2" name="canchas[1].NombreCancha" placeholder="2da opción" required>
+                        <input type="text" id="preferredCourt3" name="canchas[2].NombreCancha" placeholder="3ra opción" required>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

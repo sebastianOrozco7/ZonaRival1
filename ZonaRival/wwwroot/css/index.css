@@ -264,6 +264,33 @@ body {
     }
 }
 
+.courts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.courts-container input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+}
+
+.courts-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.courts-container input:focus {
+    outline: none;
+    border-color: #64b5f6;
+    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
+}
+
 .card {
     background: rgba(13, 20, 40, 0.85);
     backdrop-filter: blur(10px);
@@ -407,26 +434,31 @@ body {
         max-width: 100%;
         gap: 30px;
     }
-    
+
     .welcome-message {
         font-size: 2.5rem;
     }
-    
+
     .motivational-quote {
         font-size: 1.2rem;
     }
-    
+
     .sections-container {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .section {
         padding: 25px;
     }
-    
+
     .section-title {
         font-size: 1.3rem;
+    }
+
+    .courts-container input {
+        font-size: 0.85rem;
+        padding: 6px 10px;
     }
 }
 

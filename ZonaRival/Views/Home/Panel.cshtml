@@ -86,10 +86,10 @@
                                 <div class="col-12 mb-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title">@equipo.NombreEquipo</h5>
-                                            <h5 class="card-title">@equipo.CantidadJugadores</h5>
-                                            <h5 class="card-title">@equipo.RangoEdad</h5>
-                                            <h5 class="card-title">@equipo.ColorUniforme</h5>
+                                            <h5 class="card-title">Nombre: @equipo.NombreEquipo</h5>
+                                            <h5>Jugadores: @equipo.CantidadJugadores</h5>
+                                            <h5>Color: @equipo.ColorUniforme</h5>
+                                            <h5>Edad: @equipo.RangoEdad</h5>
                                             
                                             <form asp-action="DesafiarEquipo" asp-controller="Equipo" method="post">
                                                 <input type="hidden" name="equipoId" value="@equipo.EquipoId" />
@@ -149,13 +149,33 @@
                         </div>
                         <div class="mb-3">
                             <label for="RangoEdad" class="form-label">Rango de Edad</label>
-                            <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="@Model.equipoViewModel.RangoEdad" required>
+                            <select id="RangoEdad" name="RangoEdad" class="form-control" required>
+                                <option value="">Selecciona un rango de edad</option>
+                                <option value="15-20" @(Model.equipoViewModel.RangoEdad == "15-20" ? "selected" : "")>15 – 20 años</option>
+                                <option value="21-25" @(Model.equipoViewModel.RangoEdad == "21-25" ? "selected" : "")>21 – 25 años</option>
+                                <option value="26-30" @(Model.equipoViewModel.RangoEdad == "26-30" ? "selected" : "")>26 – 30 años</option>
+                                <option value="31-35" @(Model.equipoViewModel.RangoEdad == "31-35" ? "selected" : "")>31 – 35 años</option>
+                                <option value="36-40" @(Model.equipoViewModel.RangoEdad == "36-40" ? "selected" : "")>36 – 40 años</option>
+                                <option value="40+" @(Model.equipoViewModel.RangoEdad == "40+" ? "selected" : "")>40+ años</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="ColorUniforme" class="form-label">Color de Uniforme</label>
                             <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="@Model.equipoViewModel.ColorUniforme" required>
                         </div>
-                        <!-- Canchas de Preferencia no editable aquí, backend puede manejarlo -->
+                        <div class="mb-3">
+                            <label for="preferredCourts" class="form-label">Canchas de preferencia</label>
+                            <div class="courts-container">
+                                @{
+                                    var canchas = Model.equipoViewModel.EquiposCanchas?.Where(ec => ec?.Cancha != null).Select(ec => ec.Cancha.NombreCancha).ToList() ?? new List<string>();
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        var value = i < canchas.Count ? canchas[i] : "";
+                                        <input type="text" id="preferredCourt@(i+1)" name="canchas[@i].NombreCancha" placeholder="@(i+1)ra opción" value="@value">
+                                    }
+                                }
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
