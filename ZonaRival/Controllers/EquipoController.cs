@@ -60,7 +60,7 @@ namespace ZonaRival.Controllers
             if (CambioDisponibilidad)
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
-                var equipo = await _EquipoService.BuscarEquipo(EquipoId);               //ERROR, Solo me trae los elementos de equipo mas no me incluye las canchas
+                var equipo = await _EquipoService.BuscarEquipo(EquipoId);               
                 var ListaModelView = new EquipoViewModel
                 {
                     //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 

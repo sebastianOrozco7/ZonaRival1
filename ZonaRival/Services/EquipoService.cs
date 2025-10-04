@@ -48,7 +48,10 @@ namespace ZonaRival.Services
 
         public  async Task<Equipo> BuscarEquipo(int EquipoId)
         {
-            return await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
+            return await _context.Equipos
+                .Include(e => e.EquiposCanchas)
+                    .ThenInclude(ec => ec.Cancha)
+                .FirstOrDefaultAsync(e => e.EquipoId == EquipoId); //busca el equipo por si ID y trae los datos tambien de la relacion con canchas
         }
 
         public async Task<bool> EditarEquipo(int equipoId, string Nombre, int CantidadJugadores, string RangoEdad, string ColorUniforme)
