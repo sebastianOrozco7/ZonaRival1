@@ -48,11 +48,15 @@ namespace ZonaRival.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> HabilitarDisponibilidadEquipo(int EquipoId)
+        public async Task<IActionResult> ToggleDisponibilidad(int EquipoId)
         {
-            var CambioDisponibiliadad = await _EquipoService.HabilitarDisponibilidadEquipo(EquipoId);
+            var equipoActual = await _EquipoService.BuscarEquipo(EquipoId);
+            var nuevaDisponibilidad = equipoActual?.Disponibilidad ?? false; // Si es null, usa false como fallback
+            nuevaDisponibilidad = !nuevaDisponibilidad; // Alterna el estado
 
-            if (CambioDisponibiliadad)
+            var CambioDisponibilidad = await _EquipoService.DisponibilidadEquipo(EquipoId, nuevaDisponibilidad);
+
+            if (CambioDisponibilidad)
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(EquipoId);

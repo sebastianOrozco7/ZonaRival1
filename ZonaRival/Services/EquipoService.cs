@@ -25,17 +25,16 @@ namespace ZonaRival.Services
             return usuario?.Equipo;
         }
 
-        public async Task<bool> HabilitarDisponibilidadEquipo(int EquipoId)
+        public async Task<bool> DisponibilidadEquipo(int EquipoId, bool NuevaDisponibilidad)
         {
-            var equipo = await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
+            var equipo = await BuscarEquipo(EquipoId); 
 
             if(equipo == null)
-            {
                 return false;// en caso de que no encuentre ningun equipo con ese Id entrara aca
-            }
+            
 
-            //si no continura aca y cambiara la disponibilidad
-            equipo.Disponibilidad = true; 
+            //si encuentra un equipo con ese ID continura aca y cambiara la disponibilidad
+            equipo.Disponibilidad = NuevaDisponibilidad; 
             await _context.SaveChangesAsync();//aca estoy guardando los cambios en la base de datos 
             return true;
         }
@@ -49,9 +48,7 @@ namespace ZonaRival.Services
 
         public  async Task<Equipo> BuscarEquipo(int EquipoId)
         {
-            return await _context.Equipos.FirstOrDefaultAsync(e => e.EquipoId == EquipoId);
-
-            //este metodo se encarga de buscar un equipo por medio del Id, y me devuelve el equipo si lo encontro y null si no
+            return await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
         }
 
     }

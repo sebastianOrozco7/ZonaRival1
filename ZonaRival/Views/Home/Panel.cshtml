@@ -87,6 +87,10 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">@equipo.NombreEquipo</h5>
+                                            <h5 class="card-title">@equipo.CantidadJugadores</h5>
+                                            <h5 class="card-title">@equipo.ColorUniforme</h5>
+                                            <h5 class="card-title">@equipo.RangoEdad</h5>
+                                      
                                             <form asp-action="DesafiarEquipo" asp-controller="Equipo" method="post">
                                                 <input type="hidden" name="equipoId" value="@equipo.EquipoId" />
                                                 <input type="hidden" name="equipoDesafiadoId" value="@Model.equipoViewModel.EquipoId" />
