@@ -51,5 +51,25 @@ namespace ZonaRival.Services
             return await _context.Equipos.FindAsync(EquipoId); // con FindAsync estoy buscando el equipo con la condicion de su Id
         }
 
+        public async Task<bool> EditarEquipo(int equipoId, string Nombre, int CantidadJugadores, string RangoEdad, string ColorUniforme)
+        {
+            var equipo = await _context.Equipos.FindAsync(equipoId);
+
+            if (equipoId == null)
+                return false;
+
+            //asignamos los nuevos valores actualizados
+            equipo.NombreEquipo = Nombre;
+            equipo.CantidadJugadores = CantidadJugadores;
+            equipo.RangoEdad = RangoEdad;
+            equipo.ColorUniforme = ColorUniforme;
+
+            //guardamos los cambios en la base de datos
+            await _context.SaveChangesAsync();
+            return true;
+
+
+        }
+
     }
 }

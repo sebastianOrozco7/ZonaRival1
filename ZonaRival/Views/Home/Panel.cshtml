@@ -88,9 +88,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title">@equipo.NombreEquipo</h5>
                                             <h5 class="card-title">@equipo.CantidadJugadores</h5>
-                                            <h5 class="card-title">@equipo.ColorUniforme</h5>
                                             <h5 class="card-title">@equipo.RangoEdad</h5>
-                                      
+                                            <h5 class="card-title">@equipo.ColorUniforme</h5>
+                                            
                                             <form asp-action="DesafiarEquipo" asp-controller="Equipo" method="post">
                                                 <input type="hidden" name="equipoId" value="@equipo.EquipoId" />
                                                 <input type="hidden" name="equipoDesafiadoId" value="@Model.equipoViewModel.EquipoId" />
@@ -136,7 +136,7 @@
                     <h5 class="modal-title" id="editModalLabel">Editar Información del Equipo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                <form id="editTeamForm" method="post" asp-controller="Home" asp-action="EditEquipo">
+                <form id="editTeamForm" method="post" asp-controller="Equipo" asp-action="EditarEquipo">
                     <input type="hidden" name="EquipoId" value="@Model.equipoViewModel.EquipoId" />
                     <div class="modal-body">
                         <div class="mb-3">
