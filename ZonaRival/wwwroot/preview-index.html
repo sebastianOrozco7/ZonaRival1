@@ -27,37 +27,71 @@
                     <div class="team-info">
                         <div class="info-item">
                             <span class="info-label">Nombre del Equipo:</span>
-                            <span class="info-value" data-team-name></span>
+                            <span class="info-value" data-team-name>Sin nombre</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Cantidad de Jugadores:</span>
-                            <span class="info-value" data-players-count></span>
+                            <span class="info-value" data-players-count>No especificado</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Rango de Edad:</span>
-                            <span class="info-value" data-age-range></span>
+                            <span class="info-value" data-age-range>No especificado</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Color de Uniforme:</span>
-                            <span class="info-value" data-uniform-color></span>
+                            <span class="info-value" data-uniform-color>No especificado</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Canchas de Preferencia:</span>
-                            <span class="info-value" data-preferred-courts></span>
+                            <span class="info-value" data-preferred-courts>Ninguna</span>
                         </div>
                     </div>
-                    <button class="edit-btn" data-edit-team>Editar Información</button>
+                    <button type="button" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar Información</button>
                 </div>
 
+              
                 <!-- Apartado de equipos disponibles -->
                 <div class="section">
                     <h2 class="section-title">Equipos Disponibles</h2>
                     <div class="available-teams">
-                        <ul class="teams-list" data-teams-list>
-                            <!-- Lista de equipos se cargará dinámicamente -->
-                        </ul>
+                        <div class="row" data-teams-list>
+                            <!-- Ejemplo de equipos -->
+                            <div class="col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Equipo Ejemplo 1</h5>
+                                        <h5>Jugadores: 5</h5>
+                                        <h5>Color: Azul</h5>
+                                        <h5>Edad: 21-25 años</h5>
+                                        <button type="submit" class="challenge-btn">Desafiar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Equipo Ejemplo 2</h5>
+                                        <h5>Jugadores: 7</h5>
+                                        <h5>Color: Rojo</h5>
+                                        <h5>Edad: 26-30 años</h5>
+                                        <button type="submit" class="challenge-btn">Desafiar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Equipo Ejemplo 3</h5>
+                                        <h5>Jugadores: 6</h5>
+                                        <h5>Color: Verde</h5>
+                                        <h5>Edad: 31-35 años</h5>
+                                        <button type="submit" class="challenge-btn">Desafiar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="availability-btn" data-toggle-availability>Habilitar Disponibilidad</button>
+                    <button type="submit" class="availability-btn">Habilitar Disponibilidad</button>
                 </div>
 
                 <!-- Apartado de historial de partidos -->
@@ -73,6 +107,43 @@
         </div>
     </div>
 
+    <!-- Modal para editar información del equipo -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Información del Equipo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <form id="editTeamForm" method="post">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="NombreEquipo" class="form-label">Nombre del Equipo</label>
+                    <input type="text" class="form-control" id="NombreEquipo" name="NombreEquipo" value="Sin nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="CantidadJugadores" class="form-label">Cantidad de Jugadores</label>
+                    <input type="number" class="form-control" id="CantidadJugadores" name="CantidadJugadores" value="0" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="RangoEdad" class="form-label">Rango de Edad</label>
+                    <input type="text" class="form-control" id="RangoEdad" name="RangoEdad" value="No especificado" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ColorUniforme" class="form-label">Color de Uniforme</label>
+                    <input type="text" class="form-control" id="ColorUniforme" name="ColorUniforme" value="No especificado" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Array de frases motivacionales sobre fútbol
         const motivationalPhrases = [

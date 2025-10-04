@@ -208,7 +208,68 @@ body {
 .available-teams {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #64b5f6;
+}
+
+.card-body h5:not(.card-title) {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.challenge-btn {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+    animation: challengePulse 2s ease-in-out infinite;
+    margin-top: 10px;
+}
+
+.challenge-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, #e55a2b 0%, #e6821a 100%);
+}
+
+@keyframes challengePulse {
+    0%, 100% {
+        box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.5);
+    }
+}
+
+.card {
+    background: rgba(13, 20, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: #ffffff;
 }
 
 .teams-list {
