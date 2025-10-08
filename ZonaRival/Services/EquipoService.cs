@@ -43,6 +43,8 @@ namespace ZonaRival.Services
         {
             return await _context.Equipos
                 .Where(e => e.Disponibilidad == true) //filtra la consulta de acuerdo a su disponibilidad y solo trae los equipos con la disponibilidad en TRUE
+                .Include(e => e.EquiposCanchas)
+                    .ThenInclude(ec => ec.Cancha)
                 .ToListAsync();
         }
 
