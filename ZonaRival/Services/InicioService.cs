@@ -57,6 +57,11 @@ namespace ZonaRival.Services
 
             return usuario;
         }
+
+        public List<Cancha> ObtenerCanchasRegistradas()
+        {
+            return _context.Canchas.ToList();
+        }
         
     }
 }

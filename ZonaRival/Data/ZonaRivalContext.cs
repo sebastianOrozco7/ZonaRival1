@@ -54,8 +54,6 @@ namespace ZonaRival.Data
                 .HasOne(ep => ep.Partido)
                 .WithMany(p => p.equipoPartidos)
                 .HasForeignKey(ep =>  ep.PartidoId);
-
-            
         }
     }
 }

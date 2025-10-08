@@ -56,6 +56,14 @@ namespace ZonaRival.Controllers
                 return RedirectToAction("login", "Inicio");
         }
 
+
+        [HttpGet]
+        public IActionResult ListaCanchasRegistradas()
+        {
+            var canchas = _inicioService.ObtenerCanchasRegistradas();
+            return View(canchas);
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
