@@ -90,12 +90,9 @@
                                             <h5>Jugadores: @equipo.CantidadJugadores</h5>
                                             <h5>Color: @equipo.ColorUniforme</h5>
                                             <h5>Edad: @equipo.RangoEdad</h5>
-                                            
-                                            <form asp-action="DesafiarEquipo" asp-controller="Equipo" method="post">
-                                                <input type="hidden" name="equipoId" value="@equipo.EquipoId" />
-                                                <input type="hidden" name="equipoDesafiadoId" value="@Model.equipoViewModel.EquipoId" />
-                                                <button type="submit" class="btn btn-primary">Desafiar</button>
-                                            </form>
+                                            <h5>Canchas: @string.Join(", ", equipo.EquiposCanchas?.Where(ec => ec?.Cancha != null).Select(ec => ec.Cancha.NombreCancha) ?? new List<string>())</h5>
+
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="@equipo.EquipoId">Desafiar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -151,12 +148,12 @@
                             <label for="RangoEdad" class="form-label">Rango de Edad</label>
                             <select id="RangoEdad" name="RangoEdad" class="form-control" required>
                                 <option value="">Selecciona un rango de edad</option>
-                                <option value="15-20">15 – 20 años</option>
-                                <option value="21-25">21 – 25 años</option>
-                                <option value="26-30">26 – 30 años</option>
-                                <option value="31-35">31 – 35 años</option>
-                                <option value="36-40">36 – 40 años</option>
-                                <option value="40+">40+ años</option>
+                                <option value="15-20" @(Model.equipoViewModel.RangoEdad == "15-20" ? "selected" : "")>15 – 20 años</option>
+                                <option value="21-25" @(Model.equipoViewModel.RangoEdad == "21-25" ? "selected" : "")>21 – 25 años</option>
+                                <option value="26-30" @(Model.equipoViewModel.RangoEdad == "26-30" ? "selected" : "")>26 – 30 años</option>
+                                <option value="31-35" @(Model.equipoViewModel.RangoEdad == "31-35" ? "selected" : "")>31 – 35 años</option>
+                                <option value="36-40" @(Model.equipoViewModel.RangoEdad == "36-40" ? "selected" : "")>36 – 40 años</option>
+                                <option value="40+" @(Model.equipoViewModel.RangoEdad == "40+" ? "selected" : "")>40+ años</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -190,6 +187,54 @@
         </div>
     </div>
 
+    <!-- Modal para desafiar equipo -->
+    <div class="modal fade" id="challengeModal" tabindex="-1" aria-labelledby="challengeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="challengeModalLabel">Desafiar Equipo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="challengeForm" method="post" asp-controller="Equipo" asp-action="CrearDesafio">
+                    <input type="hidden" name="EquipoDesafiadoId" id="equipoDesafiadoId" />
+                    <input type="hidden" name="EquipoDesafianteId" value="@Model.equipoViewModel.EquipoId" />
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="Modalidad" class="form-label">Modalidad</label>
+                            <select id="Modalidad" name="Modalidad" class="form-control" required>
+                                <option value="">Selecciona una modalidad</option>
+                                <option value="Fútbol 5">Fútbol 5</option>
+                                <option value="Fútbol 7">Fútbol 7</option>
+                                <option value="Fútbol 11">Fútbol 11</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Cancha" class="form-label">Cancha</label>
+                            <select id="Cancha" name="Cancha" class="form-control" required>
+                                <option value="">Selecciona una cancha</option>
+                                <option value="Wembley">Wembley</option>
+                                <option value="Caracoli">Caracoli</option>
+                                <option value="La 64">La 64</option>
+                                <option value="Maradona">Maradona</option>
+                                <option value="El triangulo">El triangulo</option>
+                                <option value="Cafeteros">Cafeteros</option>
+                                <option value="Palos verdes">Palos verdes</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="Fecha" name="Fecha" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Desafío</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -217,6 +262,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const quoteElement = document.getElementById('motivational-quote');
             quoteElement.textContent = getRandomPhrase();
+        });
+
+        // Configurar modal de desafío
+        $('#challengeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var equipoId = button.data('equipo-id');
+            var modal = $(this);
+            modal.find('#equipoDesafiadoId').val(equipoId);
         });
     </script>
 </body>
