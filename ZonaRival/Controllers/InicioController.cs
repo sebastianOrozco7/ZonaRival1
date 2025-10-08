@@ -20,7 +20,19 @@ namespace ZonaRival.Controllers
         [HttpGet]
         public IActionResult Registro()
         {
-            return View();
+            // Obtenemos la lista de canchas desde el servicio
+            var canchas = _inicioService.ObtenerCanchasRegistradas();
+
+            // Creamos el modelo de la vista
+            var model = new RegistroViewModel
+            {
+                usuario = new Usuario(),
+                equipo = new Equipo(),
+                canchas = canchas
+            };
+
+            // Retornamos la vista con el modelo cargado
+            return View(model);
         }
 
         [HttpPost]
@@ -40,29 +52,23 @@ namespace ZonaRival.Controllers
             //Registrar el usuario
             _inicioService.RegistrarUsuario(model.usuario);
 
-                foreach (var cancha in model.canchas)
+                foreach (var canchaId in model.CanchasSeleccionadas)
                 {
-                    // 1. Registrar la cancha si es nueva
-                    _inicioService.RegistrarCancha(cancha);
+                // 1. Registrar la cancha si es nueva
+                //_inicioService.RegistrarCancha(cancha);
 
-                    // 2. Crear la relación Equipo-Cancha
-                    var equipoCancha = new EquipoCancha
-                    {
-                        EquipoId = model.equipo.EquipoId,
-                        CanchaId = cancha.CanchaId
-                    };
+                // 2. Crear la relación Equipo-Cancha
+                var equipoCancha = new EquipoCancha
+                {
+                    EquipoId = model.equipo.EquipoId,
+                    CanchaId = canchaId
+                };
                     _inicioService.RegistrarEquipoCancha(equipoCancha);
                 }
                 return RedirectToAction("login", "Inicio");
         }
-
-
-        [HttpGet]
-        public IActionResult ListaCanchasRegistradas()
-        {
-            var canchas = _inicioService.ObtenerCanchasRegistradas();
-            return View(canchas);
-        }
+        
+        
 
         [HttpGet]
         public IActionResult Login()

@@ -68,35 +68,28 @@
                     <div class="form-group">
                         <label for="preferredCourts">Canchas de preferencia</label>
                         <div class="courts-container">
-                            <select id="preferredCourt1" asp-for="canchas[0].NombreCancha" required>
+                            <select asp-for="CanchasSeleccionadas[0]" class="form-select" required>
                                 <option value="">Selecciona 1ra opción</option>
-                                <option value="Wembley">Wembley</option>
-                                <option value="Caracoli">Caracoli</option>
-                                <option value="La 64">La 64</option>
-                                <option value="Maradona">Maradona</option>
-                                <option value="El triangulo">El triangulo</option>
-                                <option value="Cafeteros">Cafeteros</option>
-                                <option value="Palos verdes">Palos verdes</option>
+                                @foreach (var cancha in Model.canchas)
+                                {
+                                    <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                }
                             </select>
-                            <select id="preferredCourt2" asp-for="canchas[1].NombreCancha" required>
+
+                            <select asp-for="CanchasSeleccionadas[1]" class="form-select" required>
                                 <option value="">Selecciona 2da opción</option>
-                                <option value="Wembley">Wembley</option>
-                                <option value="Caracoli">Caracoli</option>
-                                <option value="La 64">La 64</option>
-                                <option value="Maradona">Maradona</option>
-                                <option value="El triangulo">El triangulo</option>
-                                <option value="Cafeteros">Cafeteros</option>
-                                <option value="Palos verdes">Palos verdes</option>
+                                @foreach (var cancha in Model.canchas)
+                                {
+                                    <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                }
                             </select>
-                            <select id="preferredCourt3" asp-for="canchas[2].NombreCancha" required>
+
+                            <select asp-for="CanchasSeleccionadas[2]" class="form-select" required>
                                 <option value="">Selecciona 3ra opción</option>
-                                <option value="Wembley">Wembley</option>
-                                <option value="Caracoli">Caracoli</option>
-                                <option value="La 64">La 64</option>
-                                <option value="Maradona">Maradona</option>
-                                <option value="El triangulo">El triangulo</option>
-                                <option value="Cafeteros">Cafeteros</option>
-                                <option value="Palos verdes">Palos verdes</option>
+                                @foreach (var cancha in Model.canchas)
+                                {
+                                    <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                }
                             </select>
                         </div>
                     </div>
