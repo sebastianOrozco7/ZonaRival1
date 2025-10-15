@@ -54,9 +54,6 @@ namespace ZonaRival.Controllers
 
                 foreach (var canchaId in model.CanchasSeleccionadas)
                 {
-                // 1. Registrar la cancha si es nueva
-                //_inicioService.RegistrarCancha(cancha);
-
                 // 2. Crear la relación Equipo-Cancha
                 var equipoCancha = new EquipoCancha
                 {

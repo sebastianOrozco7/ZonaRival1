@@ -48,6 +48,7 @@ namespace ZonaRival.Services
                 .ToListAsync();
         }
 
+        //este metodo me permite buscar el equipo por el id para hacer consultas a la DB
         public  async Task<Equipo> BuscarEquipo(int EquipoId)
         {
             return await _context.Equipos

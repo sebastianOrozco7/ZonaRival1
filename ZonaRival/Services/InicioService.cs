@@ -35,13 +35,6 @@ namespace ZonaRival.Services
             _context.SaveChanges();
         }
 
-        //registrar canchas de preferencia
-        public void RegistrarCancha(Cancha cancha)
-        {
-            
-            _context.Canchas.Add(cancha);
-            _context.SaveChanges();
-        }
 
         public void RegistrarEquipoCancha(EquipoCancha equipoCancha)
         {

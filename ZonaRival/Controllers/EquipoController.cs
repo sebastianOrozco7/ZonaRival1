@@ -60,7 +60,7 @@ namespace ZonaRival.Controllers
             if (CambioDisponibilidad)
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
-                var equipo = await _EquipoService.BuscarEquipo(EquipoId);               
+                var equipo = await _EquipoService.BuscarEquipo(EquipoId);
                 var ListaModelView = new EquipoViewModel
                 {
                     //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
@@ -84,7 +84,7 @@ namespace ZonaRival.Controllers
             if (exito)
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
-                var equipo = await _EquipoService.BuscarEquipo(equipoId); 
+                var equipo = await _EquipoService.BuscarEquipo(equipoId);
                 var model = new EquipoViewModel
                 {
                     //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
@@ -102,3 +102,6 @@ namespace ZonaRival.Controllers
 
     }
 }
+
+
+// poniendo los datos necesarios dentro del metodo para visualizar HTTPGET me ahorrare codigo, ya no tendre que estar pasandole el equipoviewmodel en cada metodo que haga

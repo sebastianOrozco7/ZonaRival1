@@ -9,6 +9,7 @@ namespace ZonaRival.Models
         public string Modalidad {  get; set; }
         public string Estado {  get; set; }
         public DateTime Fecha {  get; set; }
+        public string Hora { get; set; }
 
         //relacion con cancha
         public int CanchaId {  get; set; }
