@@ -38,11 +38,20 @@ namespace ZonaRival.Controllers
         [HttpPost]
         public IActionResult Registro(RegistroViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                // Recargar canchas en caso de error de validación
+                model.canchas = _inicioService.ObtenerCanchasRegistradas();
+                return View(model);
+            }
+
             //verificar el Gmail
             if (_inicioService.VerificarGmail(model.usuario.Gmail))
             {
                 ViewBag.Error = "El Correo ya está registrado. Usa otro para completar el registro.";
-                return View();
+                // Recargar canchas en caso de error
+                model.canchas = _inicioService.ObtenerCanchasRegistradas();
+                return View(model);
             }
             //registra el equipo
             _inicioService.RegistrarEquipo(model.equipo);
@@ -54,13 +63,16 @@ namespace ZonaRival.Controllers
 
                 foreach (var canchaId in model.CanchasSeleccionadas)
                 {
-                // 2. Crear la relación Equipo-Cancha
-                var equipoCancha = new EquipoCancha
-                {
-                    EquipoId = model.equipo.EquipoId,
-                    CanchaId = canchaId
-                };
-                    _inicioService.RegistrarEquipoCancha(equipoCancha);
+                    if (canchaId > 0) // Filtrar valores por defecto (0)
+                    {
+                        // 2. Crear la relación Equipo-Cancha
+                        var equipoCancha = new EquipoCancha
+                        {
+                            EquipoId = model.equipo.EquipoId,
+                            CanchaId = canchaId
+                        };
+                        _inicioService.RegistrarEquipoCancha(equipoCancha);
+                    }
                 }
                 return RedirectToAction("login", "Inicio");
         }
