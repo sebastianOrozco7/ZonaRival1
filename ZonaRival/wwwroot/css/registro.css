@@ -90,8 +90,8 @@ body {
 .form-container {
     position: relative;
     z-index: 10;
-    width: 100%;
-    max-width: 450px;
+    width: 80vw;
+    max-width: 500px;
     padding: 20px;
     margin: 0 auto;
     display: flex;
@@ -104,7 +104,7 @@ body {
     background: rgba(13, 20, 40, 0.85);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    padding: 40px 30px;
+    padding: 40px 35px;
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -270,11 +270,11 @@ body {
 @media (max-width: 768px) {
     .form-container {
         padding: 15px;
-        max-width: 400px;
+        max-width: 450px;
     }
     
     .form {
-        padding: 35px 25px;
+        padding: 35px 30px;
     }
     
     .logo {
@@ -314,11 +314,11 @@ body {
 @media (max-width: 480px) {
     .form-container {
         padding: 10px;
-        max-width: 350px;
+        max-width: 400px;
     }
     
     .form {
-        padding: 30px 20px;
+        padding: 30px 25px;
     }
     
     .logo {
@@ -358,11 +358,11 @@ body {
 @media (max-width: 360px) {
     .form-container {
         padding: 8px;
-        max-width: 320px;
+        max-width: 360px;
     }
     
     .form {
-        padding: 25px 15px;
+        padding: 25px 20px;
     }
     
     .logo {

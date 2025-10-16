@@ -340,6 +340,269 @@ body {
     background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
 }
 
+.disable-btn {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+    margin-top: 20px;
+    align-self: center;
+}
+
+.disable-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(229, 62, 62, 0.4);
+    background: linear-gradient(135deg, #c53030 0%, #a42828 100%);
+}
+
+.pending-section {
+    background: rgba(13, 20, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideIn 0.8s ease-out;
+}
+
+.pending-section .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+    padding-bottom: 10px;
+}
+
+.pending-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.pending-teams .card {
+    background: rgba(13, 20, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: #ffffff;
+}
+
+.pending-teams .card-body {
+    padding: 20px;
+}
+
+.pending-teams .card-title {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #64b5f6;
+}
+
+.pending-teams .card-body h5:not(.card-title) {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.pending-teams .phone-info {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(129, 199, 132, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(129, 199, 132, 0.3);
+}
+
+.pending-teams .phone-info p {
+    margin: 0;
+    color: #81c784;
+    font-weight: 600;
+}
+
+.pending-teams .accept-btn {
+    background: linear-gradient(135deg, #81c784 0%, #2e7d32 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(129, 199, 132, 0.3);
+    margin-right: 10px;
+}
+
+.pending-teams .accept-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(129, 199, 132, 0.4);
+    background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+}
+
+.pending-teams .reject-btn {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+}
+
+.pending-teams .reject-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(229, 62, 62, 0.4);
+    background: linear-gradient(135deg, #c53030 0%, #a42828 100%);
+}
+
+.accepted-challenge {
+    border-color: #81c784 !important;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.5) !important;
+    background: rgba(129, 199, 132, 0.1) !important;
+}
+
+.modal-custom .modal-content {
+    background: rgba(13, 20, 40, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+.modal-custom .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-custom .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-custom .modal-header.challenge-header {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
+.modal-custom .modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+}
+
+.modal-custom .modal-body {
+    padding: 30px;
+}
+
+.modal-custom .modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+}
+
+.modal-custom .btn-close {
+    filter: invert(1);
+}
+
+.modal-custom .form-label {
+    font-weight: 500;
+    color: #64b5f6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.modal-custom .form-control,
+.modal-custom .form-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.modal-custom .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.modal-custom .form-control:focus,
+.modal-custom .form-select:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #64b5f6;
+    color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
+}
+
+.modal-custom .btn-primary {
+    background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(100, 181, 246, 0.3);
+}
+
+.modal-custom .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(100, 181, 246, 0.4);
+    background: linear-gradient(135deg, #81c784 0%, #2e7d32 100%);
+}
+
+.modal-custom .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.modal-custom .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
 .match-history {
     display: flex;
     flex-direction: column;

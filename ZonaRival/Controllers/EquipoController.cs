@@ -87,7 +87,7 @@ namespace ZonaRival.Controllers
                 var equipo = await _EquipoService.BuscarEquipo(equipoId);
                 var model = new EquipoViewModel
                 {
-                    //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
+                    //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite
                     ListaEquipos = equipos,
                     equipoViewModel = equipo
                 };
@@ -99,6 +99,8 @@ namespace ZonaRival.Controllers
                 return View("~/Views/Home/Panel.cshtml");
             }
         }
+
+
 
     }
 }

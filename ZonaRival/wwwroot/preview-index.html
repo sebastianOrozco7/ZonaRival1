@@ -64,7 +64,7 @@
                                         <h5>Color: Azul</h5>
                                         <h5>Edad: 21-25 años</h5>
                                         <h5>Canchas: Wembley, Caracoli</h5>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="1">Desafiar</button>
+                                        <button type="button" class="btn btn-challenge" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="1">Desafiar</button>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                         <h5>Color: Rojo</h5>
                                         <h5>Edad: 26-30 años</h5>
                                         <h5>Canchas: La 64, Maradona</h5>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="2">Desafiar</button>
+                                        <button type="button" class="btn btn-challenge" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="2">Desafiar</button>
                                     </div>
                                 </div>
                             </div>
@@ -88,13 +88,72 @@
                                         <h5>Color: Verde</h5>
                                         <h5>Edad: 31-35 años</h5>
                                         <h5>Canchas: El triangulo, Cafeteros</h5>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="3">Desafiar</button>
+                                        <button type="button" class="btn btn-challenge" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="3">Desafiar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="availability-btn">Habilitar Disponibilidad</button>
+                </div>
+
+                <!-- Apartado de encuentros pendientes -->
+                <div class="pending-section">
+                    <h2 class="section-title">Encuentros Pendientes</h2>
+                    <div class="pending-teams">
+                        <!-- Ejemplo de cards para encuentros pendientes -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Equipo A</h5>
+                                <h5>Modalidad: Fútbol 5</h5>
+                                <h5>Cancha: Wembley</h5>
+                                <h5>Fecha: 2023-10-15</h5>
+                                <h5>Hora: 18:00</h5>
+                                <div class="phone-info" style="display: none;">
+                                    <p>Teléfono: 123-456-7890</p>
+                                </div>
+                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
+                                <form method="post" style="display: inline;">
+                                    <input type="hidden" name="desafioId" value="1" />
+                                    <button type="submit" class="reject-btn">Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Equipo B</h5>
+                                <h5>Modalidad: Fútbol 7</h5>
+                                <h5>Cancha: Caracoli</h5>
+                                <h5>Fecha: 2023-10-16</h5>
+                                <h5>Hora: 19:00</h5>
+                                <div class="phone-info" style="display: none;">
+                                    <p>Teléfono: 098-765-4321</p>
+                                </div>
+                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
+                                <form method="post" style="display: inline;">
+                                    <input type="hidden" name="desafioId" value="2" />
+                                    <button type="submit" class="reject-btn">Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Equipo C</h5>
+                                <h5>Modalidad: Fútbol 11</h5>
+                                <h5>Cancha: La 64</h5>
+                                <h5>Fecha: 2023-10-17</h5>
+                                <h5>Hora: 20:00</h5>
+                                <div class="phone-info" style="display: none;">
+                                    <p>Teléfono: 555-123-4567</p>
+                                </div>
+                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
+                                <form method="post" style="display: inline;">
+                                    <input type="hidden" name="desafioId" value="3" />
+                                    <button type="submit" class="reject-btn">Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Apartado de historial de partidos -->
@@ -111,7 +170,7 @@
     </div>
 
     <!-- Modal para editar información del equipo -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal fade modal-custom" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -162,10 +221,10 @@
     </div>
 
     <!-- Modal para desafiar equipo -->
-    <div class="modal fade" id="challengeModal" tabindex="-1" aria-labelledby="challengeModalLabel" aria-hidden="true">
+    <div class="modal fade modal-custom" id="challengeModal" tabindex="-1" aria-labelledby="challengeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header challenge-header">
                     <h5 class="modal-title" id="challengeModalLabel">Desafiar Equipo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
@@ -198,6 +257,10 @@
                         <div class="mb-3">
                             <label for="Fecha" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="Fecha" name="Fecha" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Hora" class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="Hora" name="Hora" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -245,6 +308,19 @@
             var modal = $(this);
             modal.find('#equipoDesafiadoId').val(equipoId);
         });
+
+        // Función para mostrar/ocultar información de teléfono al aceptar desafío y cambiar apariencia de la card
+        function togglePhone(button) {
+            var card = button.closest('.card');
+            var phoneInfo = card.querySelector('.phone-info');
+            if (phoneInfo.style.display === 'none' || phoneInfo.style.display === '') {
+                phoneInfo.style.display = 'block';
+                card.classList.add('accepted-challenge');
+            } else {
+                phoneInfo.style.display = 'none';
+                card.classList.remove('accepted-challenge');
+            }
+        }
     </script>
 </body>
 </html>
