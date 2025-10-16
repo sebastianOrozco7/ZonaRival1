@@ -78,7 +78,14 @@ namespace ZonaRival.Services
 
         public async Task<Partido> DesafiarRival(Partido partido)
         {
-            partido.Estado = "Pendiente";
+            var EquipoDesafiado = await _context.Equipos.FindAsync(partido.EquipoDesafiadoId);
+            var EquipoRetador = await _context.Equipos.FindAsync(partido.EquipoRetadorId);
+
+            if(EquipoDesafiado == null || EquipoRetador == null)
+            {
+
+                throw new Exception("Uno de los equipos no existe en la base de datos.");
+            }
 
             _context.Partidos.Add(partido);
             await _context.SaveChangesAsync();

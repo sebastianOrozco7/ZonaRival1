@@ -260,8 +260,8 @@
                     <div class="error-message" style="color: red; margin-bottom: 15px;">@ViewBag.Error</div>
                 }
                 <form id="challengeForm" method="post" asp-controller="Equipo" asp-action="DesafiarEquipo">
-                    <input type="hidden" name="EquipoDesafiadoId" id="equipoDesafiadoId" />
-                    <input type="hidden" name="EquipoRetadorId" value="@Model.equipoViewModel.EquipoId" />
+                    <input type="hidden" name="equipoDesafiadoId" id="equipoDesafiadoId" />
+                    <input type="hidden" name="equipoRetadorId" value="@Model.equipoViewModel.EquipoId" />
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="Modalidad" class="form-label">Modalidad</label>

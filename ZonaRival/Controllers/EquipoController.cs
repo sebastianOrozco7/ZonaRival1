@@ -111,20 +111,21 @@ namespace ZonaRival.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, string hora, int equipoRetadorId, int equipoDesaFiadoId, int canchaId)
+        public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, string hora, int equipoRetadorId, int equipoDesafiadoId, int canchaId)
         {
             
 
-            if(equipoRetadorId == equipoDesaFiadoId) // en caso de que el usuario quiera desafiarse a si mismo
+            if(equipoRetadorId == equipoDesafiadoId) // en caso de que el usuario quiera desafiarse a si mismo
             {
                 ViewBag.Mensaje = "No puedes desafiar a tu propio equipo.";
 
                 var equiposInvalidos = await _EquipoService.ListaEquiposDisponibles();
                 var equipoInvalido = await _EquipoService.BuscarEquipo(equipoRetadorId);
-
+                var canchasinvalido = _InicioService.ObtenerCanchasRegistradas();
                 var modeloInvalido = new EquipoViewModel
                 {
                     ListaEquipos = equiposInvalidos,
+                    ListaCanchas = canchasinvalido,
                     equipoViewModel = equipoInvalido
                 };
 
@@ -137,8 +138,9 @@ namespace ZonaRival.Controllers
                 Fecha = fecha,
                 Hora = hora,
                 EquipoRetadorId = equipoRetadorId,
-                EquipoDesafiadoId = equipoDesaFiadoId,
-                CanchaId = canchaId
+                EquipoDesafiadoId = equipoDesafiadoId,
+                CanchaId = canchaId,
+                Estado = "Pendiente"
             };
 
             await _EquipoService.DesafiarRival(partido);
