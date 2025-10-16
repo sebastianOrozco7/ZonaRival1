@@ -254,6 +254,11 @@
                     <h5 class="modal-title" id="challengeModalLabel">Desafiar Equipo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
+                <!-- Bloque para mostrar el mensaje de error -->
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="error-message" style="color: red; margin-bottom: 15px;">@ViewBag.Error</div>
+                }
                 <form id="challengeForm" method="post" asp-controller="Equipo" asp-action="DesafiarEquipo">
                     <input type="hidden" name="EquipoDesafiadoId" id="equipoDesafiadoId" />
                     <input type="hidden" name="EquipoRetadorId" value="@Model.equipoViewModel.EquipoId" />
@@ -271,13 +276,10 @@
                             <label for="Cancha" class="form-label">Cancha</label>
                             <select id="Cancha" name="canchaId" class="form-control" required>
                                 <option value="">Selecciona una cancha</option>
-                                <option value="Wembley">Wembley</option>
-                                <option value="Caracoli">Caracoli</option>
-                                <option value="La 64">La 64</option>
-                                <option value="Maradona">Maradona</option>
-                                <option value="El triangulo">El triangulo</option>
-                                <option value="Cafeteros">Cafeteros</option>
-                                <option value="Palos verdes">Palos verdes</option>
+                                @foreach (var cancha in Model.ListaCanchas)
+                                {
+                                    <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                }
                             </select>
                         </div>
                         <div class="mb-3">

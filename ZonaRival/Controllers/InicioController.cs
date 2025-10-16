@@ -34,6 +34,7 @@ namespace ZonaRival.Controllers
             // Retornamos la vista con el modelo cargado
             return View(model);
         }
+        
 
         [HttpPost]
         public IActionResult Registro(RegistroViewModel model)
