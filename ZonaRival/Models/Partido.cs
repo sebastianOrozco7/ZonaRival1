@@ -11,14 +11,17 @@ namespace ZonaRival.Models
         public DateTime Fecha {  get; set; }
         public string Hora { get; set; }
 
+        //Equipo retador
+        public int EquipoRetadorId {  get; set; }
+        public Equipo EquipoRetador {  get; set; }
+
+        //Equipo Desafiado
+        public int EquipoDesafiadoId {  get; set; }
+        public Equipo EquipoDesafiado { get; set; }
+
         //relacion con cancha
         public int CanchaId {  get; set; }
-        public Cancha Cancha { get; set; }
-
-        //relacion con Equipo
-        public List<EquipoPartido> equipoPartidos { get; set; } = new();
-
-        
+        public Cancha Cancha { get; set; }  
 
     }
 }

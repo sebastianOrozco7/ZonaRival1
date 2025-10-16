@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ZonaRival.Data;
 using ZonaRival.Models;
+using ZonaRival.Models.ViewModels;
 
 
 namespace ZonaRival.Services
@@ -73,11 +74,16 @@ namespace ZonaRival.Services
             //guardamos los cambios en la base de datos
             await _context.SaveChangesAsync();
             return true;
+        }       
 
+        public async Task<Partido> DesafiarRival(Partido partido)
+        {
+            partido.Estado = "Pendiente";
 
-        }
+            _context.Partidos.Add(partido);
+            await _context.SaveChangesAsync();
 
-
-
+            return partido;
+        } 
     }
 }

@@ -254,13 +254,13 @@
                     <h5 class="modal-title" id="challengeModalLabel">Desafiar Equipo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                <form id="challengeForm" method="post" asp-controller="Equipo" asp-action="CrearDesafio">
+                <form id="challengeForm" method="post" asp-controller="Equipo" asp-action="DesafiarEquipo">
                     <input type="hidden" name="EquipoDesafiadoId" id="equipoDesafiadoId" />
-                    <input type="hidden" name="EquipoDesafianteId" value="@Model.equipoViewModel.EquipoId" />
+                    <input type="hidden" name="EquipoRetadorId" value="@Model.equipoViewModel.EquipoId" />
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="Modalidad" class="form-label">Modalidad</label>
-                            <select id="Modalidad" name="Modalidad" class="form-control" required>
+                            <select id="Modalidad" name="modalidad" class="form-control" required>
                                 <option value="">Selecciona una modalidad</option>
                                 <option value="Fútbol 5">Fútbol 5</option>
                                 <option value="Fútbol 7">Fútbol 7</option>
@@ -269,7 +269,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Cancha" class="form-label">Cancha</label>
-                            <select id="Cancha" name="Cancha" class="form-control" required>
+                            <select id="Cancha" name="canchaId" class="form-control" required>
                                 <option value="">Selecciona una cancha</option>
                                 <option value="Wembley">Wembley</option>
                                 <option value="Caracoli">Caracoli</option>
@@ -282,11 +282,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="Fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="Fecha" name="Fecha" required>
+                            <input type="date" class="form-control" id="Fecha" name="fecha" required>
                         </div>
                         <div class="mb-3">
                             <label for="Hora" class="form-label">Hora</label>
-                            <input type="time" class="form-control" id="Hora" name="Hora" required>
+                            <input type="time" class="form-control" id="Hora" name="hora" required>
                         </div>
                     </div>
                     <div class="modal-footer">

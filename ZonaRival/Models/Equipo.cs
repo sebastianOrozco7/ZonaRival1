@@ -16,8 +16,8 @@ namespace ZonaRival.Models
         public List<Usuario> Usuarios { get; set; } = new List<Usuario>();
         // Relación muchos a muchos con Cancha
         public List<EquipoCancha> EquiposCanchas { get; set; } = new List<EquipoCancha>();
-
-        //Relacion EquipoPartido
-        public List<EquipoPartido> equipoPartidos { get; set; } = new List<EquipoPartido>();
+        //Relacion con Partido
+        public List<Partido> PartidosComoRetador { get; set; } = new();
+        public List<Partido> PartidosComoDesafiado { get; set; } = new();
     }
 }

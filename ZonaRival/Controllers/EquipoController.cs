@@ -100,10 +100,54 @@ namespace ZonaRival.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, string hora, int equipoRetadorId, int equipoDesaFiadoId, int canchaId)
+        {
+            
+
+            if(equipoRetadorId == equipoDesaFiadoId) // en caso de que el usuario quiera desafiarse a si mismo
+            {
+                ViewBag.Mensaje = "No puedes desafiar a tu propio equipo.";
+
+                var equiposInvalidos = await _EquipoService.ListaEquiposDisponibles();
+                var equipoInvalido = await _EquipoService.BuscarEquipo(equipoRetadorId);
+
+                var modeloInvalido = new EquipoViewModel
+                {
+                    ListaEquipos = equiposInvalidos,
+                    equipoViewModel = equipoInvalido
+                };
+
+                return View("~/Views/Home/Panel.cshtml", modeloInvalido);
+            }
+
+            Partido partido = new Partido
+            {
+                Modalidad = modalidad,
+                Fecha = fecha,
+                Hora = hora,
+                EquipoRetadorId = equipoRetadorId,
+                EquipoDesafiadoId = equipoDesaFiadoId,
+                CanchaId = canchaId
+            };
+
+            await _EquipoService.DesafiarRival(partido);
+
+            var equipos = await _EquipoService.ListaEquiposDisponibles();
+            var equipo = await _EquipoService.BuscarEquipo(equipoRetadorId);
+            
+            var model = new EquipoViewModel
+            {
+                //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite
+                ListaEquipos = equipos,
+                equipoViewModel = equipo
+            };
+            return View("~/Views/Home/Panel.cshtml", model);
+        }
+
 
 
     }
 }
 
 
-// poniendo los datos necesarios dentro del metodo para visualizar HTTPGET me ahorrare codigo, ya no tendre que estar pasandole el equipoviewmodel en cada metodo que haga

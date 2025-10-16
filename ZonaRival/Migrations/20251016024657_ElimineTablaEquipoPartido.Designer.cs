@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZonaRival.Data;
 
@@ -11,9 +12,11 @@ using ZonaRival.Data;
 namespace ZonaRival.Migrations
 {
     [DbContext(typeof(ZonaRivalContext))]
-    partial class ZonaRivalContextModelSnapshot : ModelSnapshot
+    [Migration("20251016024657_ElimineTablaEquipoPartido")]
+    partial class ElimineTablaEquipoPartido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,12 +99,6 @@ namespace ZonaRival.Migrations
                     b.Property<int>("CanchaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EquipoDesafiadoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EquipoRetadorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -120,10 +117,6 @@ namespace ZonaRival.Migrations
                     b.HasKey("PartidoId");
 
                     b.HasIndex("CanchaId");
-
-                    b.HasIndex("EquipoDesafiadoId");
-
-                    b.HasIndex("EquipoRetadorId");
 
                     b.ToTable("Partidos");
                 });
@@ -185,23 +178,7 @@ namespace ZonaRival.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZonaRival.Models.Equipo", "EquipoDesafiado")
-                        .WithMany("PartidosComoDesafiado")
-                        .HasForeignKey("EquipoDesafiadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ZonaRival.Models.Equipo", "EquipoRetador")
-                        .WithMany("PartidosComoRetador")
-                        .HasForeignKey("EquipoRetadorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Cancha");
-
-                    b.Navigation("EquipoDesafiado");
-
-                    b.Navigation("EquipoRetador");
                 });
 
             modelBuilder.Entity("ZonaRival.Models.Usuario", b =>
@@ -225,10 +202,6 @@ namespace ZonaRival.Migrations
             modelBuilder.Entity("ZonaRival.Models.Equipo", b =>
                 {
                     b.Navigation("EquiposCanchas");
-
-                    b.Navigation("PartidosComoDesafiado");
-
-                    b.Navigation("PartidosComoRetador");
 
                     b.Navigation("Usuarios");
                 });

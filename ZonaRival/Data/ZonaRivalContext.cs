@@ -16,7 +16,6 @@ namespace ZonaRival.Data
 
         //tablas relacionales
         public DbSet<EquipoCancha> EquiposCanchas { get; set; }
-        public DbSet<EquipoPartido> EquiposPartidos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,19 +40,21 @@ namespace ZonaRival.Data
                 .WithMany(e => e.Usuarios)
                 .HasForeignKey(u => u.IdEquipo);
 
-            //Relacion de EquipoPartido con Equipo y Partido
-            modelBuilder.Entity<EquipoPartido>()
-                .HasKey(ep => new { ep.EquipoId, ep.PartidoId });
+            // Relación: un Partido tiene un Equipo Retador
+            modelBuilder.Entity<Partido>()
+                .HasOne(p => p.EquipoRetador)
+                .WithMany(e => e.PartidosComoRetador)
+                .HasForeignKey(p => p.EquipoRetadorId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            modelBuilder.Entity<EquipoPartido>()
-                .HasOne(ep => ep.Equipo)
-                .WithMany(e => e.equipoPartidos)
-                .HasForeignKey(ep => ep.EquipoId);
+            // Relación: un Partido tiene un Equipo Desafiado
+            modelBuilder.Entity<Partido>()
+                .HasOne(p => p.EquipoDesafiado)
+                .WithMany(e => e.PartidosComoDesafiado)
+                .HasForeignKey(p => p.EquipoDesafiadoId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            modelBuilder.Entity<EquipoPartido>()
-                .HasOne(ep => ep.Partido)
-                .WithMany(p => p.equipoPartidos)
-                .HasForeignKey(ep =>  ep.PartidoId);
+            //es importante, porque si un equipo se elimina, no quieres que todos los partidos donde participó también se borren automáticamente.
         }
     }
 }
