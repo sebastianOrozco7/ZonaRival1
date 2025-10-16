@@ -39,52 +39,33 @@ namespace ZonaRival.Controllers
         [HttpPost]
         public IActionResult Registro(RegistroViewModel model)
         {
-            // Recargar canchas siempre para evitar null reference
-            model.canchas = _inicioService.ObtenerCanchasRegistradas();
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
             //verificar el Gmail
             if (_inicioService.VerificarGmail(model.usuario.Gmail))
             {
                 ViewBag.Error = "El Correo ya está registrado. Usa otro para completar el registro.";
-                return View(model);
+                return View();
             }
+            //registra el equipo
+            _inicioService.RegistrarEquipo(model.equipo);
 
-            try
+            model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
+
+            //Registrar el usuario
+            _inicioService.RegistrarUsuario(model.usuario);
+
+            foreach (var canchaId in model.CanchasSeleccionadas)
             {
-                //registra el equipo
-                _inicioService.RegistrarEquipo(model.equipo);
-
-                model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
-
-                //Registrar el usuario
-                _inicioService.RegistrarUsuario(model.usuario);
-
-                foreach (var canchaId in model.CanchasSeleccionadas)
+                // 2. Crear la relación Equipo-Cancha
+                var equipoCancha = new EquipoCancha
                 {
-                    if (canchaId > 0) // Filtrar valores por defecto (0)
-                    {
-                        // 2. Crear la relación Equipo-Cancha
-                        var equipoCancha = new EquipoCancha
-                        {
-                            EquipoId = model.equipo.EquipoId,
-                            CanchaId = canchaId
-                        };
-                        _inicioService.RegistrarEquipoCancha(equipoCancha);
-                    }
-                }
-                return RedirectToAction("login", "Inicio");
+                    EquipoId = model.equipo.EquipoId,
+                    CanchaId = canchaId
+                };
+                _inicioService.RegistrarEquipoCancha(equipoCancha);
             }
-            catch (Exception ex)
-            {
-                // Log del error para debugging
-                ViewBag.Error = "Ocurrió un error durante el registro. Por favor, inténtalo de nuevo.";
-                return View(model);
-            }
+            return RedirectToAction("login", "Inicio");
+
         }
         
         

@@ -276,9 +276,16 @@
                             <label for="Cancha" class="form-label">Cancha</label>
                             <select id="Cancha" name="canchaId" class="form-control" required>
                                 <option value="">Selecciona una cancha</option>
-                                @foreach (var cancha in Model.ListaCanchas)
+                                @if (Model.ListaCanchas != null && Model.ListaCanchas.Any())
                                 {
-                                    <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                    foreach (var cancha in Model.ListaCanchas)
+                                    {
+                                        <option value="@cancha.CanchaId">@cancha.NombreCancha</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="">No hay canchas registradas</option>
                                 }
                             </select>
                         </div>

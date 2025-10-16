@@ -40,11 +40,15 @@ namespace ZonaRival.Controllers
 
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
+            var canchas = _InicioService.ObtenerCanchasRegistradas();
             var EquipoModelView = new EquipoViewModel
+
             {
                 //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
                 equipoViewModel = equipo,
+                ListaCanchas = canchas,
                 ListaEquipos = new List<Equipo>()
+
             };
 
             return View("~/Views/Home/Panel.cshtml", EquipoModelView); // le paso la vista y el objeto que debe utilizar para mostrar los datos
@@ -63,11 +67,13 @@ namespace ZonaRival.Controllers
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(EquipoId);
+                var canchas = _InicioService.ObtenerCanchasRegistradas();
                 var ListaModelView = new EquipoViewModel
                 {
                     //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
                     ListaEquipos = equipos,
-                    equipoViewModel = equipo
+                    equipoViewModel = equipo,
+                    ListaCanchas = canchas
                 };
                 return View("~/Views/Home/Panel.cshtml", ListaModelView);
             }
@@ -87,10 +93,12 @@ namespace ZonaRival.Controllers
             {
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(equipoId);
+                var canchas = _InicioService.ObtenerCanchasRegistradas();
                 var model = new EquipoViewModel
                 {
                     //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite
                     ListaEquipos = equipos,
+                    ListaCanchas = canchas,
                     equipoViewModel = equipo
                 };
                 return View("~/Views/Home/Panel.cshtml", model);
