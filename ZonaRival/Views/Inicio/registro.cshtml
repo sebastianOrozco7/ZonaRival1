@@ -68,7 +68,7 @@
                     <div class="form-group">
                         <label for="preferredCourts">Canchas de preferencia</label>
                         <div class="courts-container">
-                            <select asp-for="CanchasSeleccionadas[0]" class="form-select" required>
+                            <select asp-for="CanchasSeleccionadas[0]" class="form-select">
                                 <option value="0">Selecciona 1ra opción</option>
                                 @foreach (var cancha in Model.canchas)
                                 {
@@ -76,7 +76,7 @@
                                 }
                             </select>
 
-                            <select asp-for="CanchasSeleccionadas[1]" class="form-select" required>
+                            <select asp-for="CanchasSeleccionadas[1]" class="form-select">
                                 <option value="0">Selecciona 2da opción</option>
                                 @foreach (var cancha in Model.canchas)
                                 {
@@ -84,7 +84,7 @@
                                 }
                             </select>
 
-                            <select asp-for="CanchasSeleccionadas[2]" class="form-select" required>
+                            <select asp-for="CanchasSeleccionadas[2]" class="form-select">
                                 <option value="0">Selecciona 3ra opción</option>
                                 @foreach (var cancha in Model.canchas)
                                 {

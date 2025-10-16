@@ -39,10 +39,11 @@ namespace ZonaRival.Controllers
         [HttpPost]
         public IActionResult Registro(RegistroViewModel model)
         {
+            // Recargar canchas siempre para evitar null reference
+            model.canchas = _inicioService.ObtenerCanchasRegistradas();
+
             if (!ModelState.IsValid)
             {
-                // Recargar canchas en caso de error de validación
-                model.canchas = _inicioService.ObtenerCanchasRegistradas();
                 return View(model);
             }
 
@@ -50,17 +51,18 @@ namespace ZonaRival.Controllers
             if (_inicioService.VerificarGmail(model.usuario.Gmail))
             {
                 ViewBag.Error = "El Correo ya está registrado. Usa otro para completar el registro.";
-                // Recargar canchas en caso de error
-                model.canchas = _inicioService.ObtenerCanchasRegistradas();
                 return View(model);
             }
-            //registra el equipo
-            _inicioService.RegistrarEquipo(model.equipo);
 
-            model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
+            try
+            {
+                //registra el equipo
+                _inicioService.RegistrarEquipo(model.equipo);
 
-            //Registrar el usuario
-            _inicioService.RegistrarUsuario(model.usuario);
+                model.usuario.IdEquipo = model.equipo.EquipoId; // para que primero registre equipo y le asigne un id de equipo a el usuario
+
+                //Registrar el usuario
+                _inicioService.RegistrarUsuario(model.usuario);
 
                 foreach (var canchaId in model.CanchasSeleccionadas)
                 {
@@ -76,6 +78,13 @@ namespace ZonaRival.Controllers
                     }
                 }
                 return RedirectToAction("login", "Inicio");
+            }
+            catch (Exception ex)
+            {
+                // Log del error para debugging
+                ViewBag.Error = "Ocurrió un error durante el registro. Por favor, inténtalo de nuevo.";
+                return View(model);
+            }
         }
         
         
