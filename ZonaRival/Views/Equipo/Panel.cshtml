@@ -116,58 +116,33 @@
                 <div class="pending-section">
                     <h2 class="section-title">Encuentros Pendientes</h2>
                     <div class="pending-teams">
-                        <!-- Ejemplo de cards para encuentros pendientes -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Equipo A</h5>
-                                <h5>Modalidad: Fútbol 5</h5>
-                                <h5>Cancha: Wembley</h5>
-                                <h5>Fecha: 2023-10-15</h5>
-                                <h5>Hora: 18:00</h5>
-                                <div class="phone-info" style="display: none;">
-                                    <p>Teléfono: 123-456-7890</p>
+                        @if (Model.ListaEncuentrosPendientes != null && Model.ListaEncuentrosPendientes.Any())
+                        {
+                            @foreach (var encuentro in Model.ListaEncuentrosPendientes)
+                            {
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@encuentro.NombreEquipo</h5>
+                                        <h5>Modalidad: @encuentro.Modalidad</h5>
+                                        <h5>Cancha: @encuentro.NombreCancha</h5>
+                                        <h5>Fecha: @encuentro.Fecha.ToString("yyyy-MM-dd")</h5>
+                                        <h5>Hora: @encuentro.Hora.ToString(@"hh\:mm")</h5>
+                                        <div class="phone-info" style="display: none;">
+                                            <p>Teléfono: @encuentro.Telefono</p>
+                                        </div>
+                                        <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
+                                        <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
+                                            <input type="hidden" name="desafioId" value="@encuentro.DesafioId" />
+                                            <button type="submit" class="reject-btn">Rechazar</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
-                                <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
-                                    <input type="hidden" name="desafioId" value="1" />
-                                    <button type="submit" class="reject-btn">Rechazar</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Equipo B</h5>
-                                <h5>Modalidad: Fútbol 7</h5>
-                                <h5>Cancha: Caracoli</h5>
-                                <h5>Fecha: 2023-10-16</h5>
-                                <h5>Hora: 19:00</h5>
-                                <div class="phone-info" style="display: none;">
-                                    <p>Teléfono: 098-765-4321</p>
-                                </div>
-                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
-                                <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
-                                    <input type="hidden" name="desafioId" value="2" />
-                                    <button type="submit" class="reject-btn">Rechazar</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Equipo C</h5>
-                                <h5>Modalidad: Fútbol 11</h5>
-                                <h5>Cancha: La 64</h5>
-                                <h5>Fecha: 2023-10-17</h5>
-                                <h5>Hora: 20:00</h5>
-                                <div class="phone-info" style="display: none;">
-                                    <p>Teléfono: 555-123-4567</p>
-                                </div>
-                                <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
-                                <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
-                                    <input type="hidden" name="desafioId" value="3" />
-                                    <button type="submit" class="reject-btn">Rechazar</button>
-                                </form>
-                            </div>
-                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>No hay encuentros pendientes.</p>
+                        }
                     </div>
                 </div>
 
