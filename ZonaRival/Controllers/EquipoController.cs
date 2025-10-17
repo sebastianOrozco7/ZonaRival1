@@ -27,13 +27,14 @@ namespace ZonaRival.Controllers
         }
 
         //este metodo simplifica el codigo para que en cada clase no tenga que escribir esto mismo. solo tengo que llamar este metodo en los demas metodos y pasarle los parametros 
-        public EquipoViewModel EnviarViewModelCompleto(Equipo equipo, List<Cancha> listaCanchas, List<Equipo> listaEquipos)
+        public EquipoViewModel EnviarViewModelCompleto(Equipo equipo, List<Cancha> listaCanchas, List<Equipo> listaEquipos, List<Partido> listaPartidos)
         {
             EquipoViewModel Model = new EquipoViewModel
             {
                 equipoViewModel = equipo,
                 ListaCanchas = listaCanchas,
-                ListaEquipos = listaEquipos
+                ListaEquipos = listaEquipos,
+                ListaEncuentrosPendientes = listaPartidos
             };
 
             return Model;
@@ -55,8 +56,8 @@ namespace ZonaRival.Controllers
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
             var canchas = _InicioService.ObtenerCanchasRegistradas(); //este metodo lo llamo para que en el apartado de desafio me muestre las canchas disponibles
             var equipos = await _EquipoService.ListaEquiposDisponibles();
-            
-            var Model = EnviarViewModelCompleto(equipo, canchas, equipos);
+            List<Partido> p = new List<Partido>();
+            var Model = EnviarViewModelCompleto(equipo, canchas, equipos,p);
 
             return View("Panel", Model); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
@@ -75,8 +76,8 @@ namespace ZonaRival.Controllers
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(EquipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
-               
-                var model = EnviarViewModelCompleto(equipo,canchas,equipos);
+                var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(EquipoId);
+                var model = EnviarViewModelCompleto(equipo,canchas,equipos,PartidosPendientes);
 
                 return View("Panel", model);
             }
@@ -97,9 +98,9 @@ namespace ZonaRival.Controllers
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(equipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
-               
+                var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipoId);
 
-                var model = EnviarViewModelCompleto(equipo,canchas,equipos);
+                var model = EnviarViewModelCompleto(equipo,canchas,equipos,PartidosPendientes);
 
                 return View("Panel", model);
             }
@@ -129,7 +130,8 @@ namespace ZonaRival.Controllers
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(equipoRetadorId);
             var canchas = _InicioService.ObtenerCanchasRegistradas();
-            var model = EnviarViewModelCompleto(equipo, canchas, equipos);
+            var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipoRetadorId);
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos,PartidosPendientes);
 
             if (equipoRetadorId == equipoDesafiadoId) // en caso de que el usuario quiera desafiarse a si mismo
             {

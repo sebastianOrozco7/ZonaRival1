@@ -118,21 +118,25 @@
                     <div class="pending-teams">
                         @if (Model.ListaEncuentrosPendientes != null && Model.ListaEncuentrosPendientes.Any())
                         {
-                            @foreach (var encuentro in Model.ListaEncuentrosPendientes)
+                            @foreach (var solicitud in Model.ListaEncuentrosPendientes)
                             {
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">@encuentro.NombreEquipo</h5>
-                                        <h5>Modalidad: @encuentro.Modalidad</h5>
-                                        <h5>Cancha: @encuentro.NombreCancha</h5>
-                                        <h5>Fecha: @encuentro.Fecha.ToString("yyyy-MM-dd")</h5>
-                                        <h5>Hora: @encuentro.Hora.ToString(@"hh\:mm")</h5>
+                                        <h5 class="card-title">@solicitud.EquipoRetador.NombreEquipo</h5>
+                                        <h5 class="card-title">@solicitud.EquipoDesafiado.NombreEquipo</h5>
+                                        <h5>Modalidad: @solicitud.Modalidad</h5>
+                                        <h5>Cancha: @solicitud.Cancha.NombreCancha</h5>
+                                        <h5>Fecha: @solicitud.Fecha.ToString("yyyy-MM-dd")</h5>
+                                        <h5>Hora: @solicitud.Hora</h5>
+                                        <!--@*
                                         <div class="phone-info" style="display: none;">
-                                            <p>Teléfono: @encuentro.Telefono</p>
+                                            <p>Teléfono: @solicitud.EquipoRetador</p>
+                                            <p>Teléfono: @solicitud.EquipoDesafiado.Usuario.telefono</p>
                                         </div>
+                                        -->*@
                                         <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
                                         <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
-                                            <input type="hidden" name="desafioId" value="@encuentro.DesafioId" />
+                                            <input type="hidden" name="desafioId" value="@solicitud.PartidoId" />
                                             <button type="submit" class="reject-btn">Rechazar</button>
                                         </form>
                                     </div>
