@@ -73,7 +73,7 @@ namespace ZonaRival.Services
         {
             var equipo = await _context.Equipos.FindAsync(equipoId);
 
-            if (equipoId == null)
+            if (equipo == null)
                 return false;
 
             //asignamos los nuevos valores actualizados
@@ -94,5 +94,19 @@ namespace ZonaRival.Services
 
             return partido;
         } 
+
+        public async Task<Partido> AceptarDesafio(int IdPartido)
+        {
+            var Partido = await _context.Partidos.FindAsync(IdPartido);
+
+            if (Partido == null)
+                return null;
+
+            //cambio el estado del partido a Confirmado
+            Partido.Estado = "Confirmado";
+            await _context.SaveChangesAsync();
+
+            return Partido;
+        }
     }
 }
