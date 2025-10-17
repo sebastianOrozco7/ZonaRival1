@@ -337,11 +337,9 @@
         });
 
         // Configurar modal de desafío
-        $('#challengeModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var equipoId = button.data('equipo-id');
-            var modal = $(this);
-            modal.find('#equipoDesafiadoId').val(equipoId);
+        $(document).on('click', 'button[data-bs-toggle="modal"][data-bs-target="#challengeModal"]', function() {
+            var equipoId = $(this).data('equipo-id');
+            $('#equipoDesafiadoId').val(equipoId);
         });
 
         // Función para mostrar/ocultar información de teléfono al aceptar desafío
