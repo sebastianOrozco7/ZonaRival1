@@ -561,6 +561,11 @@ body {
     box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
 }
 
+.modal-custom .form-select option {
+    background: rgba(13, 20, 40, 0.95);
+    color: #ffffff;
+}
+
 .modal-custom .btn-primary {
     background: linear-gradient(135deg, #64b5f6 0%, #1976d2 100%);
     border: none;
