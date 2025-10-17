@@ -26,6 +26,16 @@ namespace ZonaRival.Controllers
             return View("~/Views/Home/Panel.cshtml");
         }
 
+        public void EnviarViewModelCompleto(Equipo equipo, List<Cancha> listaCanchas, List<Equipo> listaEquipos)
+        {
+            EquipoViewModel Model = new EquipoViewModel
+            {
+                equipoViewModel = equipo,
+                ListaCanchas = listaCanchas,
+                ListaEquipos = listaEquipos
+            };
+        }
+
         [HttpGet]
 
         public async Task<IActionResult> InformacionEquipo() // este metodo maneja el apartado donde se muestra la info del equipo
