@@ -59,6 +59,18 @@ namespace ZonaRival.Services
                               (p.EquipoDesafiadoId == IdEquipo || p.EquipoRetadorId == IdEquipo))
                    .ToListAsync();
         }
+        public async Task<List<Partido>> ListaDePartidosConfirmados(int IdEquipo)
+        {
+            return await _context.Partidos
+                .Include(p => p.EquipoRetador)
+                    .ThenInclude(e => e.Usuarios)
+                .Include(p => p.EquipoDesafiado)
+                    .ThenInclude(e => e.Usuarios)
+                .Include(p => p.Cancha)
+                .Where(p => p.Estado == "Confirmado" &&
+                              (p.EquipoDesafiadoId == IdEquipo || p.EquipoRetadorId == IdEquipo))
+                   .ToListAsync();
+        }
 
         //este metodo me permite buscar el equipo por el id para hacer consultas a la DB
         public  async Task<Equipo> BuscarEquipo(int EquipoId)

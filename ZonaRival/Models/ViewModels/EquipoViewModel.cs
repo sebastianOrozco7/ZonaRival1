@@ -7,6 +7,7 @@
         public List<Equipo> ListaEquipos { get; set; } = new();
         public List<Cancha> ListaCanchas {  get; set; } = new();
         public List<Partido> ListaEncuentrosPendientes {  get; set; } = new();
+        public List<Partido> ListaEncuentrosConfirmados { get; set; } = new();
 
     }
 }
