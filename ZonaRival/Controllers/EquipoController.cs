@@ -56,8 +56,8 @@ namespace ZonaRival.Controllers
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
             var canchas = _InicioService.ObtenerCanchasRegistradas(); //este metodo lo llamo para que en el apartado de desafio me muestre las canchas disponibles
             var equipos = await _EquipoService.ListaEquiposDisponibles();
-            List<Partido> p = new List<Partido>();
-            var Model = EnviarViewModelCompleto(equipo, canchas, equipos,p);
+            var partidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipo.EquipoId);
+            var Model = EnviarViewModelCompleto(equipo, canchas, equipos,partidosPendientes);
 
             return View("Panel", Model); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
