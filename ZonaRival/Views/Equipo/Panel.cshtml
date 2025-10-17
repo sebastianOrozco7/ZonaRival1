@@ -133,7 +133,10 @@
                                         </div>
                                         @if (solicitud.EquipoDesafiadoId == Model.equipoViewModel.EquipoId)
                                         {
-                                            <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
+                                            <form method="post" asp-controller="Equipo" asp-action="AceptarDesafio" style="display: inline;">
+                                                <input type="hidden" name="desafioId" value="@solicitud.PartidoId" />
+                                                <button type="submit" class="accept-btn">Aceptar</button>
+                                            </form>
                                             <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
                                                 <input type="hidden" name="desafioId" value="@solicitud.PartidoId" />
                                                 <button type="submit" class="reject-btn">Rechazar</button>
