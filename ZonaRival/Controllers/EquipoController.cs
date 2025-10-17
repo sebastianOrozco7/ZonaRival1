@@ -23,10 +23,11 @@ namespace ZonaRival.Controllers
         [HttpGet]
         public IActionResult Panel()
         {
-            return View("~/Views/Home/Panel.cshtml");
+            return View();
         }
 
-        public void EnviarViewModelCompleto(Equipo equipo, List<Cancha> listaCanchas, List<Equipo> listaEquipos)
+        //este metodo simplifica el codigo para que en cada clase no tenga que escribir esto mismo. solo tengo que llamar este metodo en los demas metodos y pasarle los parametros 
+        public EquipoViewModel EnviarViewModelCompleto(Equipo equipo, List<Cancha> listaCanchas, List<Equipo> listaEquipos)
         {
             EquipoViewModel Model = new EquipoViewModel
             {
@@ -34,6 +35,8 @@ namespace ZonaRival.Controllers
                 ListaCanchas = listaCanchas,
                 ListaEquipos = listaEquipos
             };
+
+            return Model;
         }
 
         [HttpGet]
@@ -50,18 +53,12 @@ namespace ZonaRival.Controllers
 
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
-            var canchas = _InicioService.ObtenerCanchasRegistradas();
-            var EquipoModelView = new EquipoViewModel
+            var canchas = _InicioService.ObtenerCanchasRegistradas(); //este metodo lo llamo para que en el apartado de desafio me muestre las canchas disponibles
+            var equipos = await _EquipoService.ListaEquiposDisponibles();
+            
+            var Model = EnviarViewModelCompleto(equipo, canchas, equipos);
 
-            {
-                //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
-                equipoViewModel = equipo,
-                ListaCanchas = canchas,
-                ListaEquipos = new List<Equipo>()
-
-            };
-
-            return View("~/Views/Home/Panel.cshtml", EquipoModelView); // le paso la vista y el objeto que debe utilizar para mostrar los datos
+            return View("Panel", Model); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
 
         [HttpPost]
@@ -78,19 +75,15 @@ namespace ZonaRival.Controllers
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(EquipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
-                var ListaModelView = new EquipoViewModel
-                {
-                    //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite 
-                    ListaEquipos = equipos,
-                    equipoViewModel = equipo,
-                    ListaCanchas = canchas
-                };
-                return View("~/Views/Home/Panel.cshtml", ListaModelView);
+               
+                var model = EnviarViewModelCompleto(equipo,canchas,equipos);
+
+                return View("Panel", model);
             }
             else
             {
                 ViewBag.Error = "No se pudo actualizar la disponibilidad.";
-                return View("~/Views/Home/Panel.cshtml");
+                return View("Panel");
             }
         }
 
@@ -104,44 +97,24 @@ namespace ZonaRival.Controllers
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(equipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
-                var model = new EquipoViewModel
-                {
-                    //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite
-                    ListaEquipos = equipos,
-                    ListaCanchas = canchas,
-                    equipoViewModel = equipo
-                };
-                return View("~/Views/Home/Panel.cshtml", model);
+               
+
+                var model = EnviarViewModelCompleto(equipo,canchas,equipos);
+
+                return View("Panel", model);
             }
             else
             {
                 ViewBag.Error = "No se pudo editar el equipo.";
-                return View("~/Views/Home/Panel.cshtml");
+                return View("Panel");
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, string hora, int equipoRetadorId, int equipoDesafiadoId, int canchaId)
         {
-            
 
-            if(equipoRetadorId == equipoDesafiadoId) // en caso de que el usuario quiera desafiarse a si mismo
-            {
-                ViewBag.Mensaje = "No puedes desafiar a tu propio equipo.";
-
-                var equiposInvalidos = await _EquipoService.ListaEquiposDisponibles();
-                var equipoInvalido = await _EquipoService.BuscarEquipo(equipoRetadorId);
-                var canchasinvalido = _InicioService.ObtenerCanchasRegistradas();
-                var modeloInvalido = new EquipoViewModel
-                {
-                    ListaEquipos = equiposInvalidos,
-                    ListaCanchas = canchasinvalido,
-                    equipoViewModel = equipoInvalido
-                };
-
-                return View("~/Views/Home/Panel.cshtml", modeloInvalido);
-            }
-
+            //llenando los datos del objeto con los datos que envia el cliente
             Partido partido = new Partido
             {
                 Modalidad = modalidad,
@@ -153,19 +126,22 @@ namespace ZonaRival.Controllers
                 Estado = "Pendiente"
             };
 
-            await _EquipoService.DesafiarRival(partido);
-
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(equipoRetadorId);
-            var canchas =  _InicioService.ObtenerCanchasRegistradas();
-            var model = new EquipoViewModel
+            var canchas = _InicioService.ObtenerCanchasRegistradas();
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos);
+
+            if (equipoRetadorId == equipoDesafiadoId) // en caso de que el usuario quiera desafiarse a si mismo
             {
-                //estoy migrando los valores a objetos EquipoViewModel que son los que la vista admite
-                ListaEquipos = equipos,
-                ListaCanchas = canchas,
-                equipoViewModel = equipo
-            };
-            return View("~/Views/Home/Panel.cshtml", model);
+                ViewBag.Mensaje = "No puedes desafiar a tu propio equipo.";
+
+                return View("Panel", model);
+            }
+
+            //se crea el desafio
+            await _EquipoService.DesafiarRival(partido);
+
+            return View("Panel", model);
         }
 
 
