@@ -153,6 +153,36 @@
                     </div>
                 </div>
 
+                <!-- Apartado de partidos confirmados -->
+                <div class="confirmed-section">
+                    <h2 class="section-title">Partidos Confirmados</h2>
+                    <div class="confirmed-teams">
+                        @if (Model.ListaPartidosConfirmados != null && Model.ListaPartidosConfirmados.Any())
+                        {
+                            @foreach (var partido in Model.ListaPartidosConfirmados)
+                            {
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@(partido.EquipoRetadorId == Model.equipoViewModel.EquipoId ? partido.EquipoDesafiado.NombreEquipo : partido.EquipoRetador.NombreEquipo)</h5>
+                                        <h5>Modalidad: @partido.Modalidad</h5>
+                                        <h5>Cancha: @partido.Cancha.NombreCancha</h5>
+                                        <h5>Fecha: @partido.Fecha.ToString("yyyy-MM-dd")</h5>
+                                        <h5>Hora: @partido.Hora</h5>
+                                        <h5>Estado: @partido.Estado</h5>
+                                        <div class="phone-info">
+                                            <p>Teléfono: @(partido.EquipoRetadorId == Model.equipoViewModel.EquipoId ? partido.EquipoDesafiado.Usuarios.FirstOrDefault()?.Telefono ?? "No disponible" : partido.EquipoRetador.Usuarios.FirstOrDefault()?.Telefono ?? "No disponible")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>No hay partidos confirmados.</p>
+                        }
+                    </div>
+                </div>
+
                 <!-- Apartado de historial de partidos -->
                 <div class="section">
                     <h2 class="section-title">Historial de Partidos</h2>
