@@ -122,18 +122,14 @@
                             {
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">@solicitud.EquipoRetador.NombreEquipo</h5>
-                                        <h5 class="card-title">@solicitud.EquipoDesafiado.NombreEquipo</h5>
+                                        <h5 class="card-title">@(solicitud.EquipoRetadorId == Model.equipoViewModel.EquipoId ? solicitud.EquipoDesafiado.NombreEquipo : solicitud.EquipoRetador.NombreEquipo)</h5>
                                         <h5>Modalidad: @solicitud.Modalidad</h5>
                                         <h5>Cancha: @solicitud.Cancha.NombreCancha</h5>
                                         <h5>Fecha: @solicitud.Fecha.ToString("yyyy-MM-dd")</h5>
                                         <h5>Hora: @solicitud.Hora</h5>
-                                        <!--@*
                                         <div class="phone-info" style="display: none;">
-                                            <p>Teléfono: @solicitud.EquipoRetador</p>
-                                            <p>Teléfono: @solicitud.EquipoDesafiado.Usuario.telefono</p>
+                                            <p>Teléfono: @(solicitud.EquipoRetadorId == Model.equipoViewModel.EquipoId ? solicitud.EquipoDesafiado.Usuarios.FirstOrDefault()?.Telefono ?? "No disponible" : solicitud.EquipoRetador.Usuarios.FirstOrDefault()?.Telefono ?? "No disponible")</p>
                                         </div>
-                                        -->*@
                                         <button type="button" class="accept-btn" onclick="togglePhone(this)">Aceptar</button>
                                         <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
                                             <input type="hidden" name="desafioId" value="@solicitud.PartidoId" />
