@@ -120,5 +120,14 @@ namespace ZonaRival.Services
 
             return Partido;
         }
+
+        public async Task RechazarDesafio(int IdPartido)
+        {
+            var partido = await _context.Partidos.FindAsync(IdPartido);
+
+            _context.Partidos.Remove(partido);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
