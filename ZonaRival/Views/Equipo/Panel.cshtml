@@ -138,7 +138,8 @@
                                                 <button type="submit" class="accept-btn">Aceptar</button>
                                             </form>
                                             <form method="post" asp-controller="Equipo" asp-action="RechazarDesafio" style="display: inline;">
-                                                <input type="hidden" name="desafioId" value="@solicitud.PartidoId" />
+                                                <input type="hidden" name="IdPartido" value="@solicitud.PartidoId" />
+                                                <input type="hidden" name="IdEquipoDesafiado" value="@solicitud.EquipoDesafiadoId" />
                                                 <button type="submit" class="reject-btn">Rechazar</button>
                                             </form>
                                         }

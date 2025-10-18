@@ -172,9 +172,16 @@ namespace ZonaRival.Controllers
             return View("Panel", model);
         }
 
-        public async Task<IActionResult> RechazarDesafio(int IdPartido)
+        public async Task<IActionResult> RechazarDesafio(int IdPartido, int IdEquipoDesafiado)
         {
             await _EquipoService.RechazarDesafio(IdPartido);
+
+            var equipos = await _EquipoService.ListaEquiposDisponibles();
+            var equipo = await _EquipoService.BuscarEquipo(IdEquipoDesafiado);
+            var canchas = _InicioService.ObtenerCanchasRegistradas();
+            var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(IdEquipoDesafiado);
+            var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(IdEquipoDesafiado);
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
 
             return View("panel", model);
         }

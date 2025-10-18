@@ -123,9 +123,9 @@ namespace ZonaRival.Services
 
         public async Task RechazarDesafio(int IdPartido)
         {
-            var partido = await _context.Partidos.FindAsync(IdPartido);
+            var partido = await _context.Partidos.FindAsync(IdPartido); //consulta para buscar el partido por medio del id
 
-            _context.Partidos.Remove(partido);
+            _context.Partidos.Remove(partido); //elimina el partido
             await _context.SaveChangesAsync();
 
         }
