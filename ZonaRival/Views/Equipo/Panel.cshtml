@@ -92,7 +92,10 @@
                                             <h5>Edad: @equipo.RangoEdad</h5>
                                             <h5>Canchas: @string.Join(", ", equipo.EquiposCanchas?.Where(ec => ec?.Cancha != null).Select(ec => ec.Cancha.NombreCancha) ?? new List<string>())</h5>
 
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="@equipo.EquipoId">Desafiar</button>
+                                            @if (equipo.EquipoId != Model.equipoViewModel.EquipoId)
+                                            {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challengeModal" data-equipo-id="@equipo.EquipoId">Desafiar</button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +160,7 @@
                 <!-- Apartado de partidos confirmados -->
                 <div class="confirmed-section">
                     <h2 class="section-title">Partidos Confirmados</h2>
-                    <div class="confirmed-teams">
+                    <div class="confirmed-teams" style="max-height: 400px; overflow-y: auto;">
                         @if (Model.ListaEncuentrosConfirmados != null && Model.ListaEncuentrosConfirmados.Any())
                         {
                             @foreach (var partido in Model.ListaEncuentrosConfirmados)
