@@ -157,9 +157,9 @@
                 <div class="confirmed-section">
                     <h2 class="section-title">Partidos Confirmados</h2>
                     <div class="confirmed-teams">
-                        @if (Model.ListaPartidosConfirmados != null && Model.ListaPartidosConfirmados.Any())
+                        @if (Model.ListaEncuentrosConfirmados != null && Model.ListaEncuentrosConfirmados.Any())
                         {
-                            @foreach (var partido in Model.ListaPartidosConfirmados)
+                            @foreach (var partido in Model.ListaEncuentrosConfirmados)
                             {
                                 <div class="card">
                                     <div class="card-body">
