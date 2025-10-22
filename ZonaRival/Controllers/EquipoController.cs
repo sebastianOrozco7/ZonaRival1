@@ -136,22 +136,17 @@ namespace ZonaRival.Controllers
                 Estado = "Pendiente"
             };
 
+            //se crea el desafio
+            await _EquipoService.DesafiarRival(partido);
+
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(equipoRetadorId);
             var canchas = _InicioService.ObtenerCanchasRegistradas();
-            var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipoRetadorId);
+            var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipo.EquipoId);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
             var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
 
-            if (equipoRetadorId == equipoDesafiadoId) // en caso de que el usuario quiera desafiarse a si mismo
-            {
-                ViewBag.Mensaje = "No puedes desafiar a tu propio equipo.";
-
-                return View("Panel", model);
-            }
-
-            //se crea el desafio
-            await _EquipoService.DesafiarRival(partido);
+           
 
             return View("Panel", model);
         }
