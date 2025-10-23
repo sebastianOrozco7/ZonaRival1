@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using ZonaRival.Data;
 using ZonaRival.Models;
 using ZonaRival.Models.ViewModels;
@@ -70,6 +71,42 @@ namespace ZonaRival.Services
                 .Where(p => p.Estado == "Confirmado" &&
                               (p.EquipoDesafiadoId == IdEquipo || p.EquipoRetadorId == IdEquipo))
                    .ToListAsync();
+        }
+
+        public bool VerificarFechaPartido(Partido partido)
+        {
+            return partido.Fecha <= DateTime.Now;
+        }
+
+        public async Task CambioDeEstadoPartido()
+        {
+            //lleno la lista partidos con los partidos que tienen el estado en CONFIRMADO
+            var partidos = await _context.Partidos
+                .Where(p => p.Estado == "Confirmado")
+                .ToListAsync();
+
+            //verifico con el metodo y con un bucle cada uno de los partidos de la lista
+            foreach(var P in partidos)
+            {
+                if (VerificarFechaPartido(P))
+                    P.Estado = "Finalizado";
+            }
+
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Partido>> Historial(int IdEquipo)
+        {
+            return await _context.Partidos
+               .Include(p => p.EquipoRetador)
+                   .ThenInclude(e => e.Usuarios)
+               .Include(p => p.EquipoDesafiado)
+                   .ThenInclude(e => e.Usuarios)
+               .Include(p => p.Cancha)
+               .Where(p => p.Estado == "Finalizado" &&
+                             (p.EquipoDesafiadoId == IdEquipo || p.EquipoRetadorId == IdEquipo))
+                  .ToListAsync();
         }
 
         //este metodo me permite buscar el equipo por el id para hacer consultas a la DB

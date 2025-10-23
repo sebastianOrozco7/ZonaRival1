@@ -181,6 +181,7 @@ namespace ZonaRival.Controllers
             return View("panel", model);
         }
 
+        
 
     }
 }
