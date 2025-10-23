@@ -46,6 +46,8 @@ namespace ZonaRival.Controllers
             return Model;
         }
 
+        
+
         [HttpGet]
 
         public async Task<IActionResult> InformacionEquipo() // este metodo maneja el apartado donde se muestra la info del equipo
@@ -58,12 +60,15 @@ namespace ZonaRival.Controllers
                 return RedirectToAction("Login", "Inicio"); //si es null entonces vuelve y redirecciona a el Login
             }
 
+            await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
+
             // Obtener el equipo usando el servicio
             var equipo = await _EquipoService.ObtenerInfoEquipo(Gmail);
             var canchas = _InicioService.ObtenerCanchasRegistradas(); //este metodo lo llamo para que en el apartado de desafio me muestre las canchas disponibles
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var partidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipo.EquipoId);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
+            // aqui debe ir la lista de los partidos finalizados(HISTORIAL)
             var Model = EnviarViewModelCompleto(equipo, canchas, equipos, partidosPendientes, partidosConfirmados);
 
             return View("Panel", Model); // le paso la vista y el objeto que debe utilizar para mostrar los datos
@@ -80,6 +85,8 @@ namespace ZonaRival.Controllers
 
             if (CambioDisponibilidad)
             {
+                await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
+
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(EquipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
@@ -104,6 +111,8 @@ namespace ZonaRival.Controllers
 
             if (exito)
             {
+                await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
+
                 var equipos = await _EquipoService.ListaEquiposDisponibles();
                 var equipo = await _EquipoService.BuscarEquipo(equipoId);
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
@@ -121,7 +130,7 @@ namespace ZonaRival.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, string hora, int equipoRetadorId, int equipoDesafiadoId, int canchaId)
+        public async Task<IActionResult> DesafiarEquipo(string modalidad, DateTime fecha, TimeSpan hora, int equipoRetadorId, int equipoDesafiadoId, int canchaId)
         {
 
             //llenando los datos del objeto con los datos que envia el cliente
@@ -138,6 +147,8 @@ namespace ZonaRival.Controllers
 
             //se crea el desafio
             await _EquipoService.DesafiarRival(partido);
+
+            await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
 
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(equipoRetadorId);
@@ -157,6 +168,8 @@ namespace ZonaRival.Controllers
 
             var Partido = await _EquipoService.AceptarDesafio(IdPartido);
 
+            await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
+
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(Partido.EquipoDesafiadoId);
             var canchas = _InicioService.ObtenerCanchasRegistradas();
@@ -170,6 +183,8 @@ namespace ZonaRival.Controllers
         public async Task<IActionResult> RechazarDesafio(int IdPartido, int IdEquipoDesafiado)
         {
             await _EquipoService.RechazarDesafio(IdPartido);
+
+            await _EquipoService.CambioDeEstadoPartido(); // este metodo cabia el estado de los partidos que ya se jugaron, debe ir primero que todo para obtener bien los valores de las listas
 
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var equipo = await _EquipoService.BuscarEquipo(IdEquipoDesafiado);

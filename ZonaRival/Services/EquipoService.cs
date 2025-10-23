@@ -75,7 +75,8 @@ namespace ZonaRival.Services
 
         public bool VerificarFechaPartido(Partido partido)
         {
-            return partido.Fecha <= DateTime.Now;
+            DateTime fechaHoraPartido = partido.Fecha.Date.Add(partido.Hora);
+            return fechaHoraPartido < DateTime.Now;
         }
 
         public async Task CambioDeEstadoPartido()
@@ -98,6 +99,7 @@ namespace ZonaRival.Services
 
         public async Task<List<Partido>> Historial(int IdEquipo)
         {
+
             return await _context.Partidos
                .Include(p => p.EquipoRetador)
                    .ThenInclude(e => e.Usuarios)

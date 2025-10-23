@@ -9,7 +9,7 @@ namespace ZonaRival.Models
         public string Modalidad {  get; set; }
         public string Estado {  get; set; }
         public DateTime Fecha {  get; set; }
-        public string Hora { get; set; }
+        public TimeSpan Hora { get; set; }
 
         //Equipo retador
         public int EquipoRetadorId {  get; set; }
