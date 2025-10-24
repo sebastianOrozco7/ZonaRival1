@@ -190,11 +190,7 @@
                 <!-- Apartado de historial de partidos -->
                 <div class="section">
                     <h2 class="section-title">Historial de Partidos</h2>
-                    <div class="match-history">
-                        <ul class="history-list" data-match-history>
-                            <!-- Historial de partidos se cargará dinámicamente -->
-                        </ul>
-                    </div>
+                    <button type="button" class="edit-btn" data-bs-toggle="modal" data-bs-target="#historyModal">Ver Historial</button>
                 </div>
             </div>
         </div>
@@ -320,6 +316,45 @@
                         <button type="submit" class="btn btn-primary">Enviar Desafío</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para historial de partidos -->
+    <div class="modal fade modal-custom" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historyModalLabel">Historial de Partidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="history-list" style="max-height: 400px; overflow-y: auto;">
+                        @if (Model.ListaHistorial != null && Model.ListaHistorial.Any())
+                        {
+                            @foreach (var partido in Model.ListaHistorial)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@(partido.EquipoRetadorId == Model.equipoViewModel.EquipoId ? partido.EquipoDesafiado.NombreEquipo : partido.EquipoRetador.NombreEquipo)</h5>
+                                        <h6>Modalidad: @partido.Modalidad</h6>
+                                        <h6>Cancha: @partido.Cancha.NombreCancha</h6>
+                                        <h6>Fecha: @partido.Fecha.ToString("yyyy-MM-dd")</h6>
+                                        <h6>Hora: @partido.Hora</h6>
+                                        <h6>Estado: @partido.Estado</h6>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>No hay partidos en el historial.</p>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
