@@ -167,7 +167,12 @@ body {
 }
 
 .form-group select option {
-    background: #0a0e27;
+    background: #0d1428;
+    color: #ffffff;
+}
+
+.form-group select option:hover {
+    background: #64b5f6;
     color: #ffffff;
 }
 

@@ -561,13 +561,15 @@ body {
     box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
 }
 
+.modal-custom .form-control option,
 .modal-custom .form-select option {
-    background: rgba(13, 20, 40, 0.95);
+    background: #0d1428;
     color: #ffffff;
 }
 
+.modal-custom .form-control option:hover,
 .modal-custom .form-select option:hover {
-    background: rgba(100, 181, 246, 0.3);
+    background: #64b5f6;
     color: #ffffff;
 }
 
