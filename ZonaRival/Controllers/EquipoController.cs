@@ -32,7 +32,8 @@ namespace ZonaRival.Controllers
             List<Cancha> listaCanchas,
             List<Equipo> listaEquipos,
             List<Partido> listaPartidosPendientes,
-            List<Partido> listaPartidosConfirmados)
+            List<Partido> listaPartidosConfirmados,
+            List<Partido> listaHistorial)
         {
             EquipoViewModel Model = new EquipoViewModel
             {
@@ -40,7 +41,8 @@ namespace ZonaRival.Controllers
                 ListaCanchas = listaCanchas,
                 ListaEquipos = listaEquipos,
                 ListaEncuentrosPendientes = listaPartidosPendientes,
-                ListaEncuentrosConfirmados = listaPartidosConfirmados
+                ListaEncuentrosConfirmados = listaPartidosConfirmados,
+                ListaEncuentrosFinalizados = listaHistorial
             };
 
             return Model;
@@ -68,8 +70,8 @@ namespace ZonaRival.Controllers
             var equipos = await _EquipoService.ListaEquiposDisponibles();
             var partidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipo.EquipoId);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
-            // aqui debe ir la lista de los partidos finalizados(HISTORIAL)
-            var Model = EnviarViewModelCompleto(equipo, canchas, equipos, partidosPendientes, partidosConfirmados);
+            var Historial = await _EquipoService.Historial(equipo.EquipoId);
+            var Model = EnviarViewModelCompleto(equipo, canchas, equipos, partidosPendientes, partidosConfirmados,Historial);
 
             return View("Panel", Model); // le paso la vista y el objeto que debe utilizar para mostrar los datos
         }
@@ -92,7 +94,8 @@ namespace ZonaRival.Controllers
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
                 var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(EquipoId);
                 var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
-                var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
+                var Historial = await _EquipoService.Historial(equipo.EquipoId);
+                var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados, Historial);
 
 
                 return View("Panel", model);
@@ -118,7 +121,8 @@ namespace ZonaRival.Controllers
                 var canchas = _InicioService.ObtenerCanchasRegistradas();
                 var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipoId);
                 var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
-                var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
+                var Historial = await _EquipoService.Historial(equipo.EquipoId);
+                var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados, Historial);
 
                 return View("Panel", model);
             }
@@ -155,7 +159,8 @@ namespace ZonaRival.Controllers
             var canchas = _InicioService.ObtenerCanchasRegistradas();
             var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(equipo.EquipoId);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
-            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
+            var Historial = await _EquipoService.Historial(equipo.EquipoId);
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados, Historial);
 
            
 
@@ -175,7 +180,8 @@ namespace ZonaRival.Controllers
             var canchas = _InicioService.ObtenerCanchasRegistradas();
             var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(Partido.EquipoDesafiadoId);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(equipo.EquipoId);
-            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
+            var Historial = await _EquipoService.Historial(equipo.EquipoId);
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados, Historial);
 
             return View("Panel", model);
         }
@@ -191,7 +197,8 @@ namespace ZonaRival.Controllers
             var canchas = _InicioService.ObtenerCanchasRegistradas();
             var PartidosPendientes = await _EquipoService.ListaDePartidosPendientes(IdEquipoDesafiado);
             var partidosConfirmados = await _EquipoService.ListaDePartidosConfirmados(IdEquipoDesafiado);
-            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados);
+            var Historial = await _EquipoService.Historial(equipo.EquipoId);
+            var model = EnviarViewModelCompleto(equipo, canchas, equipos, PartidosPendientes, partidosConfirmados, Historial);
 
             return View("panel", model);
         }

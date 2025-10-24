@@ -8,6 +8,7 @@
         public List<Cancha> ListaCanchas {  get; set; } = new();
         public List<Partido> ListaEncuentrosPendientes {  get; set; } = new();
         public List<Partido> ListaEncuentrosConfirmados { get; set; } = new();
+        public List<Partido> ListaEncuentrosFinalizados { get; set; } = new();
 
     }
 }

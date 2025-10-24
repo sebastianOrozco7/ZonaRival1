@@ -330,9 +330,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="history-list" style="max-height: 400px; overflow-y: auto;">
-                        @if (Model.ListaHistorial != null && Model.ListaHistorial.Any())
+                        @if (Model.ListaEncuentrosFinalizados != null && Model.ListaEncuentrosFinalizados.Any())
                         {
-                            @foreach (var partido in Model.ListaHistorial)
+                            @foreach (var partido in Model.ListaEncuentrosFinalizados)
                             {
                                 <div class="card mb-3">
                                     <div class="card-body">
